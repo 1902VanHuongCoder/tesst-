@@ -8,6 +8,8 @@ const SachSchema = new mongoose.Schema({
   NamXuatBan: { type: Number, required: true },
   MaNXB: { type: String, required: true },
   NguonGoc: { type: String, required: true },
+  TheLoai: { type: String, required: true },
+  HinhAnh: { type: String, required: true }, 
 });
 
 module.exports = mongoose.model("Sach", SachSchema);
