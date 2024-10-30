@@ -1,6 +1,58 @@
 <script setup>
+import { ref } from 'vue';
 import sidebarAdmin from '@/layouts/admin/sidebarAdmin.vue';
 import navbarAdmin from '@/layouts/admin/navbarAdmin.vue';
+
+// Khai báo các biến reactive để lưu trữ giá trị của các trường đầu vào
+const TenSach = ref('');
+const DonGia = ref('');
+const SoQuyen = ref('');
+const NamXuatBan = ref('');
+const MaNXB = ref('');
+const NguonGoc = ref('');
+const TheLoai = ref('');
+const HinhAnh = ref(null);
+
+// Hàm xử lý khi người dùng chọn tệp hình ảnh
+const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        HinhAnh.value = file;
+    }
+};
+
+// Hàm xử lý khi người dùng submit form
+const submitForm = async () => {
+    // Tạo đối tượng FormData để gửi dữ liệu
+    const formData = new FormData();
+    formData.append('TenSach', TenSach.value);
+    formData.append('DonGia', DonGia.value);
+    formData.append('SoQuyen', SoQuyen.value);
+    formData.append('NamXuatBan', NamXuatBan.value);
+    formData.append('MaNXB', MaNXB.value);
+    formData.append('NguonGoc', NguonGoc.value);
+    formData.append('TheLoai', TheLoai.value);
+    formData.append('HinhAnh', HinhAnh.value);
+
+    // Tạo giá trị ngẫu nhiên cho MaSach
+    const MaSach = 'MS' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    formData.append('MaSach', MaSach);
+
+    console.log(formData); // In ra dữ liệu đã được gửi 
+
+    try {
+        // Gửi yêu cầu POST tới server để lưu trữ dữ liệu
+        const response = await fetch('http://localhost:3000/api/sach', {
+            method: 'POST',
+            body: formData,
+        });
+        const data = await response.json();
+        console.log('Dữ liệu đã được submit:', data); // In ra dữ liệu đã được submit
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}; 
 </script>
 
 <template>
@@ -10,73 +62,58 @@ import navbarAdmin from '@/layouts/admin/navbarAdmin.vue';
             <navbarAdmin />
             <div class="flex-1 bg-gray-100 p-6">
                 <div class="bg-white rounded-lg shadow-lg p-6 md:p-10 mb-8 border-2">
-                    <form action="/updateprofile" method="post" class="grid gap-6 text-sm grid-cols-1 md:grid-cols-5">
+                    <!-- Form để thêm sản phẩm mới -->
+                    <form @submit.prevent="submitForm" class="grid gap-6 text-sm grid-cols-1 md:grid-cols-5">
                         <div class="md:col-span-5 text-[#333f48] font-semibold">
                             <p class="text-3xl">Thêm sản phẩm</p>
                             <p class="my-2 text-lg">Vui lòng điền đầy đủ.</p>
                         </div>
 
                         <div class="md:col-span-5">
-                            <label for="name" class="font-semibold text-[16px]">Tên sản phẩm</label>
-                            <input type="text" name="name" id="name" value=""
+                            <label for="TenSach" class="font-semibold text-[16px]">Tên sách</label>
+                            <input v-model="TenSach" type="text" name="TenSach" id="TenSach"
                                 class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Tên sản phẩm" />
                         </div>
 
                         <div class="md:col-span-5">
-                            <label for="price" class="font-semibold text-[16px]">Giá</label>
-                            <input type="text" name="price" id="price" value=""
-                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                placeholder="20.xxx" />
+                            <label for="DonGia" class="font-semibold text-[16px]">Đơn giá</label>
+                            <input v-model="DonGia" type="text" name="DonGia" id="DonGia"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="20.xxx" />
                         </div>
                         <div class="md:col-span-5">
-                            <label for="year" class="font-semibold text-[16px]">Năm xuất bản</label>
-                            <input type="text" name="year" id="year" value=""
+                            <label for="SoQuyen" class="font-semibold text-[16px]">Số lượng</label>
+                            <input v-model="SoQuyen" type="number" name="SoQuyen" id="SoQuyen"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập số lượng" />
+                        </div>
+
+                        <div class="md:col-span-5">
+                            <label for="NamXuatBan" class="font-semibold text-[16px]">Năm xuất bản</label>
+                            <input v-model="NamXuatBan" type="text" name="NamXuatBan" id="NamXuatBan"
                                 class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="20xx" />
                         </div>
 
                         <div class="md:col-span-5">
-                            <label for="author" class="font-semibold text-[16px]">Tác giả</label>
-                            <input type="text" name="author" id="author" value=""
-                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                placeholder="Tên tác giả" />
+                            <label for="MaNXB" class="font-semibold text-[16px]">Mã nhà xuất bản</label>
+                            <input v-model="MaNXB" type="text" name="MaNXB" id="MaNXB"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="NXB001" />
                         </div>
 
                         <div class="md:col-span-5">
-                            <label for="type" class="font-semibold text-[16px]">Loại sản phẩm</label>
-                            <input type="text" name="type" id="type" value=""
-                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                placeholder="Tên nhà xuất bản" />
-                        </div>
-
-                        <div class="flex flex-col justify-center w-full gap-2">
-                            <label for="" class="font-semibold text-[16px]">Nhà xuất bản</label>
-                            <select name="type"
-                                class="outline-0 p-2 block w-[80%] rounded-md border shadow-md focus:border-blue-300 focus:ring focus:ring-blue-300 focus:ring-opacity-50 cursor-pointer">
-                                <option checked value="TruyenTranh">Truyện tranh</option>
-                                <option value="TuDien">Từ điển</option>
-                                <option value="TieuThuyet">Tiểu thuyết</option>
-                            </select>
+                            <label for="NguonGoc" class="font-semibold text-[16px]">Nguồn gốc </label>
+                            <input v-model="NguonGoc" type="text" name="NguonGoc" id="NguonGoc"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Tên tác giả" />
                         </div>
 
                         <div class="md:col-span-5">
-                            <label for="quantity" class="font-semibold text-[16px]">Số lượng</label>
-                            <input type="number" name="quantity" id="quantity" value=""
-                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                placeholder="Nhập số lượng" />
+                            <label for="TheLoai" class="font-semibold text-[16px]">Loại sản phẩm</label>
+                            <input v-model="TheLoai" type="text" name="TheLoai" id="TheLoai"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Thể loại sách" />
                         </div>
 
                         <div class="md:col-span-5">
-                            <label for="description" class="font-semibold text-[16px]">Mô tả</label>
-                            <textarea id="description" name="description"
-                                    class="outline-0 p-2 block mt-2 w-full rounded-md border shadow-md focus:border-blue-300 focus:ring focus:ring-blue-300 focus:ring-opacity-50  disabled:cursor-not-allowed disabled:bg-gray-50"
-                                    rows="3" placeholder="Hãy thêm mô tả ..."></textarea>
-                        </div>
-
-                        <div class="md:col-span-5">
-                            <label for="image" class="font-semibold text-[16px]">Chọn hình ảnh: </label>
-                            <input type="file" name="image" id="image" value=""
-                                class="font-bold mt-2"
-                                placeholder="Nhập số lượng" />
+                            <label for="HinhAnh" class="font-semibold text-[16px]">Chọn hình ảnh: </label>
+                            <input @change="handleFileChange" type="file" name="HinhAnh" id="HinhAnh"
+                                class="font-bold mt-2" placeholder="Nhập số lượng" />
                         </div>
 
                         <div class="md:col-span-5 text-center w-full">
@@ -94,4 +131,6 @@ import navbarAdmin from '@/layouts/admin/navbarAdmin.vue';
     </div>
 </template>
 
-<style></style>
+<style scoped>
+/* Add your styles here */
+</style>

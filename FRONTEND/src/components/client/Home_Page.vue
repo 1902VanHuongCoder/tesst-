@@ -74,11 +74,12 @@ onMounted(() => {
                     class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-4 text-[#333f48] cursor-pointer">
                     <div v-for="(item, index) in displayedBooks" :key="index"
                         class="flex flex-col items-center border-2 rounded-lg shadow-lg p-4 bg-white transition-transform duration-300 hover:shadow-2xl">
+                        <img :src="item.HinhAnh" alt="" class="w-[200px] h-[200px] object-cover rounded-lg" />
                         <div class="text-center">
                             <h3 class="w-60 whitespace-nowrap text-ellipsis overflow-hidden text-center">
                                 <a href=""
                                     class="text-lg font-semibold text-[#A0522D] hover:text-[#8B4513] transition-all duration-300">{{
-                                        item.TenSach }}</a>
+                                    item.TenSach }}</a>
                             </h3>
                             <p class="text-md text-gray-700 mb-2">{{ item.NhaXuatBan }}</p>
                         </div>

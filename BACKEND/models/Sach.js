@@ -5,11 +5,11 @@ const SachSchema = new mongoose.Schema({
   TenSach: { type: String, required: true },
   DonGia: { type: Number, required: true },
   SoQuyen: { type: Number, required: true },
-  NamXuatBan: { type: Number, required: true },
+  NamXuatBan: { type: String, required: true },
   MaNXB: { type: String, required: true },
   NguonGoc: { type: String, required: true },
   TheLoai: { type: String, required: true },
-  HinhAnh: { type: String, required: true }, 
+  HinhAnh: { type: String, required: true },
 });
 
 module.exports = mongoose.model("Sach", SachSchema);

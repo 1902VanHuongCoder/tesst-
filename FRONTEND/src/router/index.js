@@ -15,6 +15,7 @@ import Admin_Users from "@/components/admin/Admin_Users.vue";
 import Admin_AddProduct from "@/components/admin/Admin_AddProduct.vue";
 import Admin_EditProduct from "@/components/admin/Admin_EditProduct.vue";
 import Admin_OrdersList from "@/components/admin/Admin_OrdersList.vue";
+import Admin_AddNhaXuatBan from "@/components/admin/Admin_AddNhaXuatBan.vue";
 
 const routes = [
   {
@@ -86,6 +87,11 @@ const routes = [
     path: "/admin/admin_AddProduct",
     name: "Admin_AddProduct",
     component: Admin_AddProduct,
+  },
+   {
+    path: "/admin/admin_AddNhaXuatBan",
+    name: "Admin_AddNhaXuatBan",
+    component: Admin_AddNhaXuatBan,
   },
   {
     path: "/admin/admin_EditProduct",

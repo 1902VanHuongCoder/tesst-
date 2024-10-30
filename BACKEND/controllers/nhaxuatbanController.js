@@ -1,10 +1,17 @@
 const NhaXuatBan = require("../models/NhaXuatBan");
 
 exports.createNhaXuatBan = async (req, res) => {
-  const newNhaXuatBan = new NhaXuatBan(req.body);
+  const { MaNXB, TenNXB, DiaChi } = req.body;
+  console.log(req.body);
+  const newNhaXuatBan = new NhaXuatBan({
+    TenNXB,
+    DiaChi,
+    MaNXB,
+  });
+
   try {
-    const savedNhaXuatBan = await newNhaXuatBan.save();
-    res.status(201).json(savedNhaXuatBan);
+    await newNhaXuatBan.save();
+    console.log("succes");
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
