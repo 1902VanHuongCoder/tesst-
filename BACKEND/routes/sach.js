@@ -26,7 +26,9 @@ router.post('/', upload.single('HinhAnh'), sachController.createSach);
 
 // Các route khác
 router.get('/', sachController.getSach);
-router.put('/:id', sachController.updateSach);
+
+router.put('/:id', upload.single('HinhAnh'), sachController.updateSach);
+
 router.delete('/:id', sachController.deleteSach);
 
 module.exports = router;

@@ -10,6 +10,7 @@ const SachSchema = new mongoose.Schema({
   NguonGoc: { type: String, required: true },
   TheLoai: { type: String, required: true },
   HinhAnh: { type: String, required: true },
+  cloudinary_id: { type: String, required: true }, // ID của ảnh trên Cloudinary
 });
 
 module.exports = mongoose.model("Sach", SachSchema);

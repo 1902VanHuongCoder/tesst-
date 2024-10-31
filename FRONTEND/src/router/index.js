@@ -8,7 +8,6 @@ import Book_History from "@/components/client/Book_History.vue";
 import Order from "@/components/client/Order.vue";
 import Info from "@/components/client/Info.vue";
 import Edit_Info from "@/components/client/Edit_Info.vue";
-import Admin_login from "@/components/auth/Admin_Login.vue";
 import Add_Admin from "@/components/auth/Add_Admin.vue";
 import Admin_Dashboard from "@/components/admin/Admin_Dashboard.vue";
 import Admin_Users from "@/components/admin/Admin_Users.vue";
@@ -16,6 +15,13 @@ import Admin_AddProduct from "@/components/admin/Admin_AddProduct.vue";
 import Admin_EditProduct from "@/components/admin/Admin_EditProduct.vue";
 import Admin_OrdersList from "@/components/admin/Admin_OrdersList.vue";
 import Admin_AddNhaXuatBan from "@/components/admin/Admin_AddNhaXuatBan.vue";
+import Admin_AddNhanVien from "@/components/admin/Admin_AddNhanVien.vue";
+import Admin_TheoDoiMuonSach from "@/components/admin/Admin_TheoDoiMuonSach.vue";
+import Admin_AddDocGia from "@/components/admin/Admin_AddDocGia.vue";
+import Staff_Login from "@/components/auth/Staff_Login.vue";
+import QuanTriVien_Login from "@/components/auth/QuanTriVien_Login.vue";
+import QuanTriVien_Signup from "@/components/auth/QuanTriVien_Signup.vue";
+import Sach_List from "@/components/admin/Sach_List.vue";
 
 const routes = [
   {
@@ -64,9 +70,9 @@ const routes = [
     component: Edit_Info,
   },
   {
-    path: "/admin_login",
-    name: "Admin_login",
-    component: Admin_login,
+    path: "/staff_login",
+    name: "Staff_login",
+    component: Staff_Login,
   },
   {
     path: "/admin/add_Admin",
@@ -88,11 +94,44 @@ const routes = [
     name: "Admin_AddProduct",
     component: Admin_AddProduct,
   },
-   {
+  {
     path: "/admin/admin_AddNhaXuatBan",
     name: "Admin_AddNhaXuatBan",
     component: Admin_AddNhaXuatBan,
   },
+  {
+    path: "/admin/admin_AddNhanVien",
+    name: "admin_AddNhanVien",
+    component: Admin_AddNhanVien,
+  },
+  {
+    path: "/admin/admin_TheoDoiMuonSach",
+    name: "admin_TheoDoiMuonSach",
+    component: Admin_TheoDoiMuonSach,
+  },
+
+  {
+    path: "/admin/admin_AddDocGia",
+    name: "admin_AddDocGia",
+    component: Admin_AddDocGia,
+  },
+
+  {
+    path: "/admin/login",
+    name: "admin_login",
+    component: QuanTriVien_Login,
+  },
+  {
+    path: "/admin/signup",
+    name: "admin_signup",
+    component: QuanTriVien_Signup,
+  },
+  {
+    path: "/admin/sachList",
+    name: "sach_list",
+    component: Sach_List,
+  },
+
   {
     path: "/admin/admin_EditProduct",
     name: "Admin_EditProduct",
