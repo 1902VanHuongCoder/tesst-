@@ -94,7 +94,7 @@ export default {
                 if (response.ok) {
                     const data = await response.json();
                     alert('Đăng ký thành công!');
-                    this.$router.push('/admin/admin_Dashboard');
+                    this.$router.push('/quantrivien/quanly');
                 } else {
                     const errorData = await response.json();
                     alert(`Đăng ký thất bại: ${errorData.message}`);

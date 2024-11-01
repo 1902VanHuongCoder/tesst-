@@ -15,7 +15,7 @@ const products = ref([
         <div class="flex-1 flex flex-col overflow-auto">
             <navbarAdmin />
             <div class="flex-1 bg-gray-100 p-6">
-                <div class="text-center py-4">
+                <div class="text-center py-4">x
                     <h2 class="text-[#333] font-bold text-[20px] block lg:hidden">DANH SÁCH SẢN PHẨM</h2>
                 </div>
                 <div id="all_products" class="overflow-auto">

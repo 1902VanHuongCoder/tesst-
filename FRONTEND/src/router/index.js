@@ -26,6 +26,7 @@ import TheoDoiMuonSach_List from "@/components/admin/TheoDoiMuonSach_List.vue";
 import QuanTriVienDangNhap from "@/components/auth/QuanTriVienDangNhap.vue";
 import QuanLy from "@/components/admin/QuanLy.vue";
 import QuanTriVienDangKy from "@/components/auth/QuanTriVienDangKy.vue";
+import ThongTinTongQuanCuaThuVien from "@/components/admin/ThongTinTongQuanCuaThuVien.vue";
 
 const routes = [
   {
@@ -120,7 +121,7 @@ const routes = [
     component: Admin_AddDocGia,
   },
 
-  // Route để người quản trị viên đăng nhập vào hệ thống 
+  // Route để người quản trị viên đăng nhập vào hệ thống
   {
     path: "/quantrivien/dangnhap",
     name: "Quản trị viên đăng nhập",
@@ -130,9 +131,17 @@ const routes = [
   // Route để người quản trị viên đăng ký tài khoản
   {
     path: "/quantrivien/dangky",
-    name: "Quản trị viên đăng ký tài khoảkhoản",
+    name: "Quản trị viên đăng ký tài khoản",
     component: QuanTriVienDangKy,
   },
+
+  // Route để người quản trị viên xem thong tin tổng quan của hệ thống
+  {
+    path: "/quantrivien/tongquan",
+    name: "Thông tin tổng quan của hệ thống",
+    component: ThongTinTongQuanCuaThuVien,
+  },
+
   {
     path: "/admin/sachList",
     name: "sach_list",

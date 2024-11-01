@@ -1,0 +1,112 @@
+<script setup>
+import sidebarAdmin from '@/layouts/admin/sidebarAdmin.vue';
+import { ref, onMounted, computed } from 'vue';
+
+const duLieuThongKe = ref({});
+
+const napDuLieuThongKe = async () => {
+    try {
+        const response = await fetch('http://localhost:3000/api/thongke', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+        });
+        duLieuThongKe.value = await response.json();
+    } catch (error) {
+        console.error('Error fetching statistics:', error);
+    }
+};
+
+onMounted(napDuLieuThongKe);
+
+const formatNumber = (number) => {
+    return number < 10 ? `0${number}` : number;
+};
+
+const formattedDocGiaCount = computed(() => formatNumber(duLieuThongKe.value.docGiaCount));
+const formattedNhanVienCount = computed(() => formatNumber(duLieuThongKe.value.nhanVienCount));
+const formattedNhaXuatBanCount = computed(() => formatNumber(duLieuThongKe.value.nhaXuatBanCount));
+const formattedQuanTriVienCount = computed(() => formatNumber(duLieuThongKe.value.quanTriVienCount));
+const formattedSachCount = computed(() => formatNumber(duLieuThongKe.value.sachCount));
+const formattedTheoDoiMuonSachCount = computed(() => formatNumber(duLieuThongKe.value.theoDoiMuonSachCount));
+</script>
+
+<template>
+    <div class="flex h-screen">
+        <sidebarAdmin />
+        <div class="h-full w-full">
+            <div class="w-full py-[25px] px-10 border-b-2">
+                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md">THÔNG TIN TỔNG QUAN THƯ VIỆN
+                </div>
+            </div>
+            <div class="p-6 mb-8 grid grid-cols-4 gap-x-5 gap-y-5">
+                <div class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-100">
+                    <div class="flex flex-col items-center gap-y-5">
+                        <div
+                            class="text-[40px] bg-[#a0522d] w-[150px] h-[150px] flex justify-center items-center text-white rounded-full flex-col shadow-inner border-[4px] border-solid border-[#333333]">
+                            <span>{{ formattedDocGiaCount }}</span>
+                        </div>
+                        <p class="text-xl font-normal">ĐỌC GIẢ</p>
+                    </div>
+                </div>
+                <div class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-100">
+                    <div class="flex flex-col items-center gap-y-5">
+                        <div
+                            class="text-[40px] bg-[#a0522d] w-[150px] h-[150px] flex justify-center items-center text-white rounded-full flex-col shadow-inner border-[4px] border-solid border-[#333333]">
+                            <span>{{ formattedNhanVienCount }}</span>
+                        </div>
+                        <p class="text-xl font-normal">NHÂN VIÊN</p>
+                    </div>
+
+                </div>
+                <div class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-100">
+                    <div class="flex flex-col items-center gap-y-5">
+                        <div
+                            class="text-[40px] bg-[#a0522d] w-[150px] h-[150px] flex justify-center items-center text-white rounded-full flex-col shadow-inner border-[4px] border-solid border-[#333333]">
+                            <span>{{ formattedNhaXuatBanCount }}</span>
+                        </div>
+                        <p class="text-xl font-normal">NHÀ XUẤT BẢN</p>
+                    </div>
+
+                </div>
+                <div class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-100">
+                    <div class="flex flex-col items-center gap-y-5">
+                        <div
+                            class="text-[40px] bg-[#a0522d] w-[150px] h-[150px] flex justify-center items-center text-white rounded-full flex-col shadow-inner border-[4px] border-solid border-[#333333]">
+                            <span>{{ formattedQuanTriVienCount }}</span>
+                        </div>
+                        <p class="text-xl font-normal">QUẢN TRỊ VIÊN</p>
+                    </div>
+
+                </div>
+                <div class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-100">
+                    <div class="flex flex-col items-center gap-y-5">
+                        <div
+                            class="text-[40px] bg-[#a0522d] w-[150px] h-[150px] flex justify-center items-center text-white rounded-full flex-col shadow-inner border-[4px] border-solid border-[#333333]">
+                            <span>{{ formattedSachCount }}</span>
+                        </div>
+                        <p class="text-xl font-normal">SÁCH</p>
+                    </div>
+
+                </div>
+                <div class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-100">
+                    <div class="flex flex-col items-center gap-y-5">
+                        <div
+                            class="text-[40px] bg-[#a0522d] w-[150px] h-[150px] flex justify-center items-center text-white rounded-full flex-col shadow-inner border-[4px] border-solid border-[#333333]">
+                            <span>{{ formattedTheoDoiMuonSachCount }}</span>
+                        </div>
+                        <p class="text-xl font-normal">LƯỢT MƯỢN SÁCH</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</template>
+
+<style scoped>
+/* Add your styles here */
+</style>
