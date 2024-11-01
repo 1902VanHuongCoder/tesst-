@@ -68,7 +68,7 @@ export default {
     },
     methods: {
         async handleSignUp() {
-         
+
 
             if (this.form.MatKhau !== this.form.ConfirmPassword) {
                 alert('Mật khẩu và xác nhận mật khẩu không khớp!');
@@ -77,7 +77,7 @@ export default {
 
             try {
                 const hashedPassword = await bcrypt.hash(this.form.MatKhau, 10);
-               
+
                 const response = await fetch('http://localhost:3000/api/quantrivien/signup', {
                     method: 'POST',
                     headers: {

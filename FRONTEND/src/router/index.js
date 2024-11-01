@@ -9,7 +9,6 @@ import Order from "@/components/client/Order.vue";
 import Info from "@/components/client/Info.vue";
 import Edit_Info from "@/components/client/Edit_Info.vue";
 import Add_Admin from "@/components/auth/Add_Admin.vue";
-import Admin_Dashboard from "@/components/admin/Admin_Dashboard.vue";
 import Admin_Users from "@/components/admin/Admin_Users.vue";
 import Admin_AddProduct from "@/components/admin/Admin_AddProduct.vue";
 import Admin_EditProduct from "@/components/admin/Admin_EditProduct.vue";
@@ -19,13 +18,14 @@ import Admin_AddNhanVien from "@/components/admin/Admin_AddNhanVien.vue";
 import Admin_TheoDoiMuonSach from "@/components/admin/Admin_TheoDoiMuonSach.vue";
 import Admin_AddDocGia from "@/components/admin/Admin_AddDocGia.vue";
 import Staff_Login from "@/components/auth/Staff_Login.vue";
-import QuanTriVien_Login from "@/components/auth/QuanTriVien_Login.vue";
-import QuanTriVien_Signup from "@/components/auth/QuanTriVien_Signup.vue";
 import Sach_List from "@/components/admin/Sach_List.vue";
 import NhanVien_List from "@/components/admin/NhanVien_List.vue";
 import DocGia_List from "@/components/admin/DocGia_List.vue";
 import NhaXuatBan_List from "@/components/admin/NhaXuatBan_List.vue";
 import TheoDoiMuonSach_List from "@/components/admin/TheoDoiMuonSach_List.vue";
+import QuanTriVienDangNhap from "@/components/auth/QuanTriVienDangNhap.vue";
+import QuanLy from "@/components/admin/QuanLy.vue";
+import QuanTriVienDangKy from "@/components/auth/QuanTriVienDangKy.vue";
 
 const routes = [
   {
@@ -84,9 +84,9 @@ const routes = [
     component: Add_Admin,
   },
   {
-    path: "/admin/admin_Dashboard",
-    name: "Admin_Dashboard",
-    component: Admin_Dashboard,
+    path: "/quantrivien/quanly",
+    name: "Trang quản lý",
+    component: QuanLy,
   },
   {
     path: "/admin/admin_Users",
@@ -120,15 +120,18 @@ const routes = [
     component: Admin_AddDocGia,
   },
 
+  // Route để người quản trị viên đăng nhập vào hệ thống 
   {
-    path: "/admin/login",
-    name: "admin_login",
-    component: QuanTriVien_Login,
+    path: "/quantrivien/dangnhap",
+    name: "Quản trị viên đăng nhập",
+    component: QuanTriVienDangNhap,
   },
+
+  // Route để người quản trị viên đăng ký tài khoản
   {
-    path: "/admin/signup",
-    name: "admin_signup",
-    component: QuanTriVien_Signup,
+    path: "/quantrivien/dangky",
+    name: "Quản trị viên đăng ký tài khoảkhoản",
+    component: QuanTriVienDangKy,
   },
   {
     path: "/admin/sachList",

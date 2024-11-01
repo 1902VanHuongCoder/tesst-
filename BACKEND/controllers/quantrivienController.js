@@ -1,16 +1,13 @@
-const QuanTriVien = require("../models/QuanTriVien");
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcrypt");
+const QuanTriVien = require("../models/QuanTriVien"); // Adjust the path as necessary
 
 exports.signup = async (req, res) => {
   const { MaQuanTriVien, MatKhau } = req.body;
 
-  console.log(req.body);
-
   try {
-    const hashedPassword = await bcrypt.hash(MatKhau, 10);
     const newAdmin = new QuanTriVien({
       MaQuanTriVien,
-      MatKhau: hashedPassword,
+      MatKhau,
     });
 
     await newAdmin.save();
@@ -24,20 +21,33 @@ exports.login = async (req, res) => {
   const { MaQuanTriVien, MatKhau } = req.body;
 
   try {
+    console.log("Login Request:", req.body);
+
     // Tìm admin theo MaQuanTriVien
     const admin = await QuanTriVien.findOne({ MaQuanTriVien });
+
+    // Kiểm tra nếu admin không tồn tại
     if (!admin) {
+      console.log("Admin not found:", MaQuanTriVien);
       return res
         .status(400)
         .json({ message: "Mã Quản Trị Viên không tồn tại" });
     }
 
     // Kiểm tra mật khẩu
+    console.log("Plain Password:", MatKhau);
+    console.log("Hashed Password:", admin.MatKhau);
+
     const isMatch = await bcrypt.compare(MatKhau, admin.MatKhau);
+    console.log("Password Match:", isMatch);
     if (!isMatch) {
-      return res.status(400).json({ message: "Mật khẩu không đúng" });
+      return res.status(400).json({ message: "Mật khẩu sai quài dị chời!" });
     }
+
+    // Nếu mật khẩu đúng, trả về phản hồi thành công
+    res.status(200).json({ message: "Đăng nhập thành công" });
   } catch (error) {
+    console.error("Error during login:", error);
     res.status(500).json({ message: "Có lỗi xảy ra", error });
   }
 };
