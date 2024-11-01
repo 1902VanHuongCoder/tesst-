@@ -22,6 +22,10 @@ import Staff_Login from "@/components/auth/Staff_Login.vue";
 import QuanTriVien_Login from "@/components/auth/QuanTriVien_Login.vue";
 import QuanTriVien_Signup from "@/components/auth/QuanTriVien_Signup.vue";
 import Sach_List from "@/components/admin/Sach_List.vue";
+import NhanVien_List from "@/components/admin/NhanVien_List.vue";
+import DocGia_List from "@/components/admin/DocGia_List.vue";
+import NhaXuatBan_List from "@/components/admin/NhaXuatBan_List.vue";
+import TheoDoiMuonSach_List from "@/components/admin/TheoDoiMuonSach_List.vue";
 
 const routes = [
   {
@@ -130,6 +134,28 @@ const routes = [
     path: "/admin/sachList",
     name: "sach_list",
     component: Sach_List,
+  },
+
+  {
+    path: "/admin/nhanvienList",
+    name: "nhanvien_list",
+    component: NhanVien_List,
+  },
+
+  {
+    path: "/admin/docgiaList",
+    name: "docgia_list",
+    component: DocGia_List,
+  },
+  {
+    path: "/admin/nhaxuatbanList",
+    name: "nhaxuatban_list",
+    component: NhaXuatBan_List,
+  },
+  {
+    path: "/admin/theodoimuonsachList",
+    name: "theodoimuonsach_list",
+    component: TheoDoiMuonSach_List,
   },
 
   {
