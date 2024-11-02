@@ -59,6 +59,7 @@ export default {
     },
     methods: {
         async handleLogin() {
+            console.log(this.form);
             try {
                 const response = await fetch('http://localhost:3000/api/nhanvien/login', {
                     method: 'POST',
@@ -70,8 +71,12 @@ export default {
 
                 if (response.ok) {
                     const data = await response.json();
+
                     alert('Đăng nhập thành công!');
-                    this.$router.push('/admin/admin_Dashboard');
+                    // Save data to local storage
+                    localStorage.setItem('chucVu', JSON.stringify(data.nhanvien.ChucVu));
+
+                    this.$router.push('/quantrivien/tongquan');
                 } else {
                     const errorData = await response.json();
                     alert(`Đăng nhập thất bại: ${errorData.message}`);

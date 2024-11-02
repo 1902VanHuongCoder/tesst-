@@ -71,6 +71,7 @@ export default {
                     const data = await response.json();
                     alert('Đăng nhập thành công!');
                     console.log('Response Data:', data);
+                    localStorage.setItem('chucVu', "admin");
                     // Redirect to the admin management page
                     this.$router.push('/quantrivien/quanly');
                 } else {

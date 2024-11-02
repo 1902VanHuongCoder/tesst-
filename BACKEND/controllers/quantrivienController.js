@@ -8,6 +8,7 @@ exports.signup = async (req, res) => {
     const newAdmin = new QuanTriVien({
       MaQuanTriVien,
       MatKhau,
+      ChucVu: "admin",
     });
 
     await newAdmin.save();

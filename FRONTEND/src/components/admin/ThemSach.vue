@@ -56,18 +56,19 @@ const submitForm = async () => {
 </script>
 
 <template>
-    <div class="flex h-screen">
+    <div class="flex h-screen relative">
         <sidebarAdmin />
-        <div class="flex-1 flex flex-col overflow-auto">
-            <navbarAdmin />
+        <div class="ml-[320px] h-full w-full"> <!--?-->
+            <div class="w-full py-[25px] px-10 border-2">
+                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md"> THÊM SÁCH MỚI
+                </div>
+            </div>
+
             <div class="flex-1 bg-gray-100 p-6">
-                <div class="bg-white rounded-lg shadow-lg p-6 md:p-10 mb-8 border-2">
+                <div class="mb-8">
                     <!-- Form để thêm sản phẩm mới -->
                     <form @submit.prevent="submitForm" class="grid gap-6 text-sm grid-cols-1 md:grid-cols-5">
-                        <div class="md:col-span-5 text-[#333f48] font-semibold">
-                            <p class="text-3xl">Thêm sản phẩm</p>
-                            <p class="my-2 text-lg">Vui lòng điền đầy đủ.</p>
-                        </div>
+
 
                         <div class="md:col-span-5">
                             <label for="TenSach" class="font-semibold text-[16px]">Tên sách</label>
@@ -120,7 +121,7 @@ const submitForm = async () => {
                             <div class="w-full">
                                 <button type="submit"
                                     class="bg-[#333f48] hover:bg-[#A0522D] text-white font-bold py-3 px-4 rounded">
-                                    Thêm mới sản phẩm
+                                    Thêm mới sách
                                 </button>
                             </div>
                         </div>

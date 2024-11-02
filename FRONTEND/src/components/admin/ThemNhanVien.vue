@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import sidebarAdmin from '@/layouts/admin/sidebarAdmin.vue';
 import navbarAdmin from '@/layouts/admin/navbarAdmin.vue';
+import bcrypt from 'bcryptjs';
 
 // Khai báo các biến reactive để lưu trữ giá trị của các trường đầu vào
 const HoTenNV = ref('');
@@ -15,6 +16,10 @@ const submitForm = async () => {
     // Tạo giá trị ngẫu nhiên và duy nhất cho MSNV
     const MSNV = 'NV' + Math.random().toString(36).substr(2, 9).toUpperCase();
 
+
+    // Hash the password
+    const hashedPassword = await bcrypt.hash(MatKhau.value, 10);
+
     // Tạo đối tượng để gửi dữ liệu
     const data = {
         MSNV: MSNV,
@@ -22,7 +27,7 @@ const submitForm = async () => {
         ChucVu: ChucVu.value,
         DiaChi: DiaChi.value,
         DienThoai: DienThoai.value,
-        MatKhau: MatKhau.value
+        MatKhau: hashedPassword
     };
 
     console.log('Data:', data); // In ra dữ liệu đã được gửi 
@@ -37,6 +42,7 @@ const submitForm = async () => {
             body: JSON.stringify(data),
         });
         const responseData = await response.json();
+        localStorage.setItem('chucVu', JSON.stringify(data.responseData.ChucVu));
         console.log('Dữ liệu đã được submit:', responseData); // In ra dữ liệu đã được submit
 
     } catch (error) {
@@ -48,6 +54,63 @@ const submitForm = async () => {
 <template>
     <div class="flex h-screen">
         <sidebarAdmin />
+        <div class="ml-[320px] h-full w-full"> <!--?-->
+            <div class="w-full py-[25px] px-10 border-2">
+                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md"> THÊM NHÂN VIÊN MỚI
+                </div>
+            </div>
+
+            <div class="flex-1 p-6">
+                <div class="mb-8">
+                    <!-- Form để thêm sản phẩm mới -->
+                    <form @submit.prevent="submitForm" class="grid gap-6 text-sm grid-cols-1 md:grid-cols-5">
+
+                        <div class="md:col-span-5">
+                            <label for="HoTenNV" class="font-semibold text-[16px]">Họ tên nhân viên</label>
+                            <input v-model="HoTenNV" type="text" name="HoTenNV" id="HoTenNV"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                placeholder="Họ tên nhân viên" />
+                        </div>
+
+                        <div class="md:col-span-5">
+                            <label for="ChucVu" class="font-semibold text-[16px]">Chức vụ</label>
+                            <input v-model="ChucVu" type="text" name="ChucVu" id="ChucVu"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Chức vụ" />
+                        </div>
+
+                        <div class="md:col-span-5">
+                            <label for="DiaChi" class="font-semibold text-[16px]">Địa chỉ</label>
+                            <input v-model="DiaChi" type="text" name="DiaChi" id="DiaChi"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Địa chỉ" />
+                        </div>
+
+                        <div class="md:col-span-5">
+                            <label for="DienThoai" class="font-semibold text-[16px]">Điện thoại</label>
+                            <input v-model="DienThoai" type="text" name="DienThoai" id="DienThoai"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Điện thoại" />
+                        </div>
+
+                        <div class="md:col-span-5">
+                            <label for="MatKhau" class="font-semibold text-[16px]">Mật khẩu</label>
+                            <input v-model="MatKhau" type="password" name="MatKhau" id="MatKhau"
+                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Mật khẩu" />
+                        </div>
+
+                        <div class="md:col-span-5 text-center w-full">
+                            <div class="w-full">
+                                <button type="submit"
+                                    class="bg-[#333f48] hover:bg-[#A0522D] text-white font-bold py-3 px-4 rounded">
+                                    Thêm mới nhân viên
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
         <div class="flex-1 flex flex-col overflow-auto">
             <navbarAdmin />
             <div class="flex-1 bg-gray-100 p-6">

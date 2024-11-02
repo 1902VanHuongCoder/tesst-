@@ -9,24 +9,20 @@ import Order from "@/components/client/Order.vue";
 import Info from "@/components/client/Info.vue";
 import Edit_Info from "@/components/client/Edit_Info.vue";
 import Add_Admin from "@/components/auth/Add_Admin.vue";
-import Admin_Users from "@/components/admin/Admin_Users.vue";
-import Admin_AddProduct from "@/components/admin/Admin_AddProduct.vue";
-import Admin_EditProduct from "@/components/admin/Admin_EditProduct.vue";
-import Admin_OrdersList from "@/components/admin/Admin_OrdersList.vue";
-import Admin_AddNhaXuatBan from "@/components/admin/Admin_AddNhaXuatBan.vue";
-import Admin_AddNhanVien from "@/components/admin/Admin_AddNhanVien.vue";
-import Admin_TheoDoiMuonSach from "@/components/admin/Admin_TheoDoiMuonSach.vue";
-import Admin_AddDocGia from "@/components/admin/Admin_AddDocGia.vue";
-import Staff_Login from "@/components/auth/Staff_Login.vue";
-import Sach_List from "@/components/admin/Sach_List.vue";
-import NhanVien_List from "@/components/admin/NhanVien_List.vue";
-import DocGia_List from "@/components/admin/DocGia_List.vue";
-import NhaXuatBan_List from "@/components/admin/NhaXuatBan_List.vue";
-import TheoDoiMuonSach_List from "@/components/admin/TheoDoiMuonSach_List.vue";
 import QuanTriVienDangNhap from "@/components/auth/QuanTriVienDangNhap.vue";
-import QuanLy from "@/components/admin/QuanLy.vue";
 import QuanTriVienDangKy from "@/components/auth/QuanTriVienDangKy.vue";
 import ThongTinTongQuanCuaThuVien from "@/components/admin/ThongTinTongQuanCuaThuVien.vue";
+import DanhSachSach from "@/components/admin/DanhSachSach.vue";
+import ThemSach from "@/components/admin/ThemSach.vue";
+import DanhSachDocGia from "@/components/admin/DanhSachDocGia.vue";
+import ThemDocGia from "@/components/admin/ThemDocGia.vue";
+import DanhSachNhanVien from "@/components/admin/DanhSachNhanVien.vue";
+import ThemNhanVien from "@/components/admin/ThemNhanVien.vue";
+import DanhSachNhaXuatBan from "@/components/admin/DanhSachNhaXuatBan.vue";
+import ThemNhaXuatBan from "@/components/admin/ThemNhaXuatBan.vue";
+import ThemThongTinMuonSach from "@/components/admin/ThemThongTinMuonSach.vue";
+import DanhSachMuonSach from "@/components/admin/DanhSachMuonSach.vue";
+import NhanVienDangNhap from "@/components/auth/NhanVienDangNhap.vue";
 
 const routes = [
   {
@@ -74,51 +70,16 @@ const routes = [
     name: "Edit_Info",
     component: Edit_Info,
   },
+  // Route này lơi nơi nhân viên dùng để đăng nhập vào hệ thống
   {
-    path: "/staff_login",
-    name: "Staff_login",
-    component: Staff_Login,
+    path: "/nhanvien/dangnhap",
+    name: "Nhân viên đăng nhập",
+    component: NhanVienDangNhap,
   },
   {
     path: "/admin/add_Admin",
     name: "Add_Admin",
     component: Add_Admin,
-  },
-  {
-    path: "/quantrivien/quanly",
-    name: "Trang quản lý",
-    component: QuanLy,
-  },
-  {
-    path: "/admin/admin_Users",
-    name: "Admin_Users",
-    component: Admin_Users,
-  },
-  {
-    path: "/admin/admin_AddProduct",
-    name: "Admin_AddProduct",
-    component: Admin_AddProduct,
-  },
-  {
-    path: "/admin/admin_AddNhaXuatBan",
-    name: "Admin_AddNhaXuatBan",
-    component: Admin_AddNhaXuatBan,
-  },
-  {
-    path: "/admin/admin_AddNhanVien",
-    name: "admin_AddNhanVien",
-    component: Admin_AddNhanVien,
-  },
-  {
-    path: "/admin/admin_TheoDoiMuonSach",
-    name: "admin_TheoDoiMuonSach",
-    component: Admin_TheoDoiMuonSach,
-  },
-
-  {
-    path: "/admin/admin_AddDocGia",
-    name: "admin_AddDocGia",
-    component: Admin_AddDocGia,
   },
 
   // Route để người quản trị viên đăng nhập vào hệ thống
@@ -142,43 +103,68 @@ const routes = [
     component: ThongTinTongQuanCuaThuVien,
   },
 
+  // Route để người quản trị viên xem danh sách sách
   {
-    path: "/admin/sachList",
-    name: "sach_list",
-    component: Sach_List,
+    path: "/quantrivien/quanlysach",
+    name: "Quản lý sách",
+    component: DanhSachSach,
+  },
+  // Route để người quản trị viên thêm sách
+  {
+    path: "/quantrivien/themsach",
+    name: "Thêm sách",
+    component: ThemSach,
+  },
+  // Route để người quản trị viên xem danh sách đọc giả
+  {
+    path: "/quantrivien/quanlydocgia",
+    name: "Quản lý đọc giả",
+    component: DanhSachDocGia,
+  },
+  // Route để người quản trị viên thêm đọc giả
+  {
+    path: "/quantrivien/themdocgia",
+    name: "Thêm đọc giả",
+    component: ThemDocGia,
   },
 
+  // Route để người quản trị viên xem danh sach nhân viên
   {
-    path: "/admin/nhanvienList",
-    name: "nhanvien_list",
-    component: NhanVien_List,
+    path: "/quantrivien/quanlynhanvien",
+    name: "Quản lý nhân viên",
+    component: DanhSachNhanVien,
+  },
+  // Route để người quản trị viên thêm nhân viên
+  {
+    path: "/quantrivien/themnhanvien",
+    name: "Thêm nhân viên",
+    component: ThemNhanVien,
+  },
+  // Route để người quản trị viên xem danh sách nhà xuất bản
+  {
+    path: "/quantrivien/quanlynhaxuatban",
+    name: "Quản lý thông tin nhà xuất bản",
+    component: DanhSachNhaXuatBan,
+  },
+  // Route để người quản trị viên thêm nhà xuất bản
+  {
+    path: "/quantrivien/themnhaxuatban",
+    name: "thêm nhà xuất bản",
+    component: ThemNhaXuatBan,
   },
 
+  // Route để người quản trị viên xem bảng theo dõi mượn sách
   {
-    path: "/admin/docgiaList",
-    name: "docgia_list",
-    component: DocGia_List,
-  },
-  {
-    path: "/admin/nhaxuatbanList",
-    name: "nhaxuatban_list",
-    component: NhaXuatBan_List,
-  },
-  {
-    path: "/admin/theodoimuonsachList",
-    name: "theodoimuonsach_list",
-    component: TheoDoiMuonSach_List,
+    path: "/quantrivien/theodoimuonsach",
+    name: "Theo dõi mượn sách",
+    component: DanhSachMuonSach,
   },
 
+  // Route để người quản trị viên xem thêm thông tin mượn sách
   {
-    path: "/admin/admin_EditProduct",
-    name: "Admin_EditProduct",
-    component: Admin_EditProduct,
-  },
-  {
-    path: "/admin/admin_OrdersList",
-    name: "Admin_OrdersList",
-    component: Admin_OrdersList,
+    path: "/quantrivien/themthongtinmuonsach",
+    name: "Thêm thông tin mượn sách",
+    component: ThemThongTinMuonSach,
   },
 ];
 

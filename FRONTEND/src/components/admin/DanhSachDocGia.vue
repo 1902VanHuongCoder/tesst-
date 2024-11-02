@@ -1,10 +1,44 @@
 <script setup>
 import sidebarAdmin from '@/layouts/admin/sidebarAdmin.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
 const docGiaList = ref([]);
 const selectedDocGia = ref(null);
 const showModal = ref(false);
+
+// Pagination logic
+const currentPage = ref(1);
+const recordsPerPage = 10;
+
+const totalPages = computed(() => {
+    return Math.ceil(docGiaList.value.length / recordsPerPage);
+});
+
+const paginatedDocGiaList = computed(() => {
+    const start = (currentPage.value - 1) * recordsPerPage;
+    const end = start + recordsPerPage;
+    return docGiaList.value.slice(start, end);
+});
+
+const goToPage = (page) => {
+    if (page >= 1 && page <= totalPages.value) {
+        currentPage.value = page;
+    }
+};
+
+const nextPage = () => {
+    if (currentPage.value < totalPages.value) {
+        currentPage.value++;
+    }
+};
+
+const prevPage = () => {
+    if (currentPage.value > 1) {
+        currentPage.value--;
+    }
+};
 
 const fetchDocGiaList = async () => {
     try {
@@ -65,51 +99,73 @@ const deleteDocGia = async (id) => {
 
 onMounted(fetchDocGiaList);
 </script>
-
 <template>
     <div class="flex h-screen">
         <sidebarAdmin />
-        <div class="p-6 bg-gray-100">
-            <div class="bg-white rounded-lg shadow-lg p-6 md:p-10 mb-8 border-2">
-                <h2 class="text-3xl font-semibold text-[#333f48] mb-6">Danh sách độc giả</h2>
-                <table class="min-w-full bg-white">
+        <div class="ml-[320px] h-full w-full "> <!--?-->
+            <div class="w-full py-[25px] px-10 border-2">
+                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md">QUẢN LÝ ĐỌC GIẢ
+                </div>
+            </div>
+            <div class="bg-white text-[12px] w-full max-h-screen p-6">
+                <table class="min-w-full bg-white mb-8">
                     <thead>
                         <tr>
-                            <th class="py-2 px-4 border-b">Mã Độc Giả</th>
-                            <th class="py-2 px-4 border-b">Họ Lót</th>
-                            <th class="py-2 px-4 border-b">Tên</th>
-                            <th class="py-2 px-4 border-b">Ngày Sinh</th>
-                            <th class="py-2 px-4 border-b">Phái</th>
-                            <th class="py-2 px-4 border-b">Địa Chỉ</th>
-                            <th class="py-2 px-4 border-b">Điện Thoại</th>
-                            <th class="py-2 px-4 border-b">Actions</th>
+                            <th class="py-2 px-4 border">Mã Độc Giả</th>
+                            <th class="py-2 px-4 border">Họ Lót</th>
+                            <th class="py-2 px-4 border">Tên</th>
+                            <th class="py-2 px-4 border">Ngày Sinh</th>
+                            <th class="py-2 px-4 border">Phái</th>
+                            <th class="py-2 px-4 border">Địa Chỉ</th>
+                            <th class="py-2 px-4 border">Điện Thoại</th>
+                            <th class="py-2 px-4 border">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="docGia in docGiaList" :key="docGia._id">
-                            <td class="py-2 px-4 border-b">{{ docGia.MaDocGia }}</td>
-                            <td class="py-2 px-4 border-b">{{ docGia.HoLot }}</td>
-                            <td class="py-2 px-4 border-b">{{ docGia.Ten }}</td>
-                            <td class="py-2 px-4 border-b">{{ new Date(docGia.NgaySinh).toLocaleDateString() }}</td>
-                            <td class="py-2 px-4 border-b">{{ docGia.Phai }}</td>
-                            <td class="py-2 px-4 border-b">{{ docGia.DiaChi }}</td>
-                            <td class="py-2 px-4 border-b">{{ docGia.DienThoai }}</td>
-                            <td class="py-2 px-4 border-b">
+                            <td class="py-2 px-4 border">{{ docGia.MaDocGia }}</td>
+                            <td class="py-2 px-4 border">{{ docGia.HoLot }}</td>
+                            <td class="py-2 px-4 border">{{ docGia.Ten }}</td>
+                            <td class="py-2 px-4 border">{{ new Date(docGia.NgaySinh).toLocaleDateString() }}</td>
+                            <td class="py-2 px-4 border">{{ docGia.Phai }}</td>
+                            <td class="py-2 px-4 border">{{ docGia.DiaChi }}</td>
+                            <td class="py-2 px-4 border">{{ docGia.DienThoai }}</td>
+                            <td class="py-2 px-4 border-[1px] text-center">
                                 <button @click="openUpdateModal(docGia)"
                                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
                                 <button @click="deleteDocGia(docGia._id)"
-                                    class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</button>
+                                    class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">Delete</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="flex justify-between text-[12px]">
+                    <button @click="() => router.push('/quantrivien/themdocgia')"
+                        class="bg-[#a0522d] text-white px-5 flex justify-center items-center gap-x-2 font-bold hover:scale-110 transition-transform">
+                        <span>
+                            <i class="fa-solid fa-plus"></i>
+                        </span><span> Thêm độc giả </span>
+                    </button>
+                    <div class="flex justify-end text-[12px] space-x-2">
+                        <button @click="prevPage" :disabled="currentPage === 1"
+                            class="px-4 py-2 bg-gray-300 rounded">Trước</button>
+                        <button v-for="page in totalPages" :key="page" @click="goToPage(page)"
+                            :class="['px-4 py-2 rounded', { 'bg-blue-500 text-white': currentPage === page, 'bg-gray-300': currentPage !== page }]">
+                            {{ page }}
+                        </button>
+                        <button @click="nextPage" :disabled="currentPage === totalPages"
+                            class="px-4 py-2 bg-gray-300 rounded">Sau</button>
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
 
-    <div v-if="showModal && selectedDocGia" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div v-if="showModal && selectedDocGia"
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
-            <h3 class="text-2xl mb-4">Update Độc Giả</h3>
+            <h3 class="text-2xl mb-4 text-center text-[#a0522d] font-bold">CẬP NHẬT THÔNG TIN</h3>
             <form @submit.prevent="updateDocGia">
                 <div class="mb-4">
                     <label for="MaDocGia" class="block text-sm font-medium text-gray-700">Mã Độc Giả</label>

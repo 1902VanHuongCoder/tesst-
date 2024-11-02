@@ -63,6 +63,8 @@ exports.loginNhanvien = async (req, res) => {
       console.log("Login successful");
     }
 
+    console.log(nhanvien);
+
     // Generate a token or handle session here if needed
     res.status(200).json({ message: "Login successful", nhanvien });
   } catch (error) {
