@@ -41,11 +41,6 @@ const sidebarListItem = [
         icon: "fa-solid fa-user-secret",
         path: "/quantrivien/dangky"
     },
-    {
-        title: "Đăng xuất",
-        icon: "fa-solid fa-right-from-bracket",
-        path: "/quantrivien/dangnhap"
-    },
 ];
 
 // Get the user's role from local storage
@@ -61,6 +56,12 @@ const filteredSidebarListItem = computed(() => {
         return sidebarListItem.filter((item, index) => index !== 3 && index !== 6);
     }
 });
+
+const dangXuat = () => {
+    console.log('Navigating to /nhanvien/dangnhap');
+    localStorage.removeItem('chucVu');
+    router.push('/nhanvien/dangnhap');
+};
 </script>
 
 <template>
@@ -81,6 +82,12 @@ const filteredSidebarListItem = computed(() => {
                 <i :class="item.icon" class="text-lg font-semibold group-hover:opacity-100"></i>
                 <span class="text-lg font-semibold">{{ item.title }}</span>
             </router-link>
+            <li @click="dangXuat"
+                class="group p-5 pl-7 flex items-center gap-x-4 hover:bg-[rgba(0,0,0,.5)] cursor-pointer group transition-all duration-300"
+                active-class="active-link">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span class="text-lg font-semibold"> Đăng xuất</span>
+            </li>
         </ul>
     </div>
 </template>

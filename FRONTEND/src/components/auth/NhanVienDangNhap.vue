@@ -74,7 +74,7 @@ export default {
 
                     alert('Đăng nhập thành công!');
                     // Save data to local storage
-                    localStorage.setItem('chucVu', JSON.stringify(data.nhanvien.ChucVu));
+                    localStorage.setItem('chucVu', data.nhanvien.ChucVu);
 
                     this.$router.push('/quantrivien/tongquan');
                 } else {

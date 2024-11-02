@@ -31,6 +31,9 @@ const formatNumber = (number) => {
     return number < 10 ? `0${number}` : number;
 };
 
+const chucVu = localStorage.getItem('chucVu');
+const isAdmin = computed(() => chucVu === 'admin');
+
 const formattedDocGiaCount = computed(() => formatNumber(duLieuThongKe.value.docGiaCount));
 const formattedNhanVienCount = computed(() => formatNumber(duLieuThongKe.value.nhanVienCount));
 const formattedNhaXuatBanCount = computed(() => formatNumber(duLieuThongKe.value.nhaXuatBanCount));
@@ -59,7 +62,7 @@ const formattedTheoDoiMuonSachCount = computed(() => formatNumber(duLieuThongKe.
                         <p class="text-xl font-normal">ĐỌC GIẢ</p>
                     </div>
                 </div>
-                <div @click="() => navigate('/quantrivien/quanlynhanvien')"
+                <div v-if="isAdmin" @click="() => navigate('/quantrivien/quanlynhanvien')"
                     class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-50 hover:shadow-2xl transition-all duration-500 cursor-pointer hover:bg-slate-200">
                     <div class="flex flex-col items-center gap-y-5">
                         <div
@@ -81,7 +84,7 @@ const formattedTheoDoiMuonSachCount = computed(() => formatNumber(duLieuThongKe.
                     </div>
 
                 </div>
-                <div @click="() => navigate('/quantrivien/quanlyquantrivien')"
+                <div v-if="isAdmin" @click="() => navigate('/quantrivien/quanlyquantrivien')"
                     class="p-6 border-[2px] border-dashed border-[#a0522d] bg-slate-50 hover:shadow-2xl transition-all duration-500 cursor-pointer hover:bg-slate-200">
                     <div class="flex flex-col items-center gap-y-5">
                         <div

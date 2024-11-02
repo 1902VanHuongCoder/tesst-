@@ -84,7 +84,7 @@ export default {
                     const data = await response.json();
                     localStorage.setItem('chucVu', "admin");
                     alert('Đăng ký thành công!');
-                    this.$router.push('/quantrivien/quanly');
+                    this.$router.push('/quantrivien/tongquan');
                 } else {
                     const errorData = await response.json();
                     alert(`Đăng ký thất bại: ${errorData.message}`);
