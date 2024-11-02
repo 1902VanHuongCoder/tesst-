@@ -4,10 +4,11 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 
+// Define the list of sidebar items
 const sidebarListItem = [
     {
         title: "Tổng quan",
-        icon: "fa-solid fa-book",
+        icon: "fab fa-buromobelexperte",
         path: "/quantrivien/tongquan"
     },
     {
@@ -32,7 +33,7 @@ const sidebarListItem = [
     },
     {
         title: "Quản lý mượn trả sách",
-        icon: "fa-solid fa-book",
+        icon: "fas fa-calculator",
         path: "/quantrivien/theodoimuonsach"
     },
     {
@@ -47,52 +48,51 @@ const sidebarListItem = [
     },
 ];
 
-const chucVu = JSON.parse(localStorage.getItem('chucVu'));
+// Get the user's role from local storage
+const chucVu = localStorage.getItem('chucVu');
 
+// Filter the sidebar items based on the user's role
 const filteredSidebarListItem = computed(() => {
     if (chucVu === 'admin') {
+        // If the user is an admin, show all items
         return sidebarListItem;
     } else {
-        return sidebarListItem.filter((item, index) => index !== 0 && index !== 6);
+        // If the user is not an admin, hide the first and seventh items
+        return sidebarListItem.filter((item, index) => index !== 3 && index !== 6);
     }
 });
 </script>
+
 <template>
     <div class="fixed left-0 top-0 min-h-screen w-80 bg-[#333] text-white flex-shrink-0 hidden lg:block">
         <div class="px-6 py-5 bg-[#A0522D]">
-            <h1 class="font-bold text-xl uppercase text-white flex items-center gap-x-4">
+            <h1 class="font-bold text-xl uppercase text-white flex items-center gap-x-4 drop-shadow-lg">
                 <span
                     class="flex justify-center items-center w-[50px] h-[50px] bg-[rgba(0,0,0,0.2)] p-3 rounded-full"><i
                         class="fa-solid fa-book-open"></i></span>
                 <span class="drop-shadow-lg"> QUẢN LÝ NHÀ SÁCH</span>
             </h1>
         </div>
-        <ul class="flex flex-col space-y-5 pt-8 px-4 border-t-2">
+        <ul class="flex flex-col border-t-2">
+            <!-- Loop through the filtered sidebar items and create a router-link for each -->
             <router-link v-for="(item, index) in filteredSidebarListItem" :key="index" :to="item.path"
-                class="group flex items-center gap-x-4 hover:bg-white p-4 cursor-pointer group transition-all duration-300"
+                class="group p-5 pl-7 flex items-center gap-x-4 hover:bg-[rgba(0,0,0,.5)] cursor-pointer group transition-all duration-300"
                 active-class="active-link">
-                <i :class="item.icon"
-                    class="text-lg font-semibold group-hover:text-[#A0522D] opacity-50 group-hover:opacity-100"></i>
-                <span class="text-lg font-semibold group-hover:text-[#A0522D]">{{ item.title }}</span>
+                <i :class="item.icon" class="text-lg font-semibold group-hover:opacity-100"></i>
+                <span class="text-lg font-semibold">{{ item.title }}</span>
             </router-link>
         </ul>
     </div>
 </template>
 
 <style scoped>
+/* Style for the active link */
 .active-link {
-    background-color: white;
+    background-color: #DE8F5F;
     /* Change to your desired background color */
-    color: #a0522d;
+    color: #fff;
     /* Change to your desired text color */
-}
-</style>
-<style scoped>
-.active-link {
-    background-color: white;
-    /* Change to your desired background color */
-    color: #a0522d;
-
-    /* Change to your desired text color */
+    text-shadow: 0 0 1px #000;
+    /* Add text shadow for better readability */
 }
 </style>

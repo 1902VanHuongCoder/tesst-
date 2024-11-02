@@ -59,11 +59,10 @@ const submitForm = async () => {
     <div class="flex h-screen relative">
         <sidebarAdmin />
         <div class="ml-[320px] h-full w-full"> <!--?-->
-            <div class="w-full py-[25px] px-10 border-2">
-                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md"> THÊM SÁCH MỚI
+            <div class="w-full py-[25px] px-10 border-b-2 bg-[#a0522d] shadow-lg">
+                <div class="text-4xl font-bold  text-center text-white drop-shadow-xl"> THÊM THÔNG TIN SÁCH MỚI
                 </div>
             </div>
-
             <div class="flex-1 bg-gray-100 p-6">
                 <div class="mb-8">
                     <!-- Form để thêm sản phẩm mới -->

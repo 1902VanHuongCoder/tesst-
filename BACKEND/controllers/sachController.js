@@ -1,5 +1,5 @@
 const Sach = require("../models/Sach");
-const cloudinary = require('../config/cloudinary');
+const cloudinary = require("../config/cloudinary");
 
 exports.createSach = async (req, res) => {
   try {
@@ -75,7 +75,7 @@ exports.updateSach = async (req, res) => {
     const sach = await Sach.findById(req.params.id);
     console.log(sach);
     if (!sach) {
-      // console.log(sach); 
+      // console.log(sach);
       return res.status(404).json({ message: "Sách not found" });
     }
 
@@ -90,12 +90,10 @@ exports.updateSach = async (req, res) => {
           console.log("Old image removed from Cloudinary");
         } catch (error) {
           console.error("Error removing old image from Cloudinary:", error);
-          return res
-            .status(500)
-            .json({
-              message: "Error removing old image from Cloudinary",
-              error,
-            });
+          return res.status(500).json({
+            message: "Error removing old image from Cloudinary",
+            error,
+          });
         }
       }
 
@@ -129,6 +127,7 @@ exports.updateSach = async (req, res) => {
 exports.deleteSach = async (req, res) => {
   try {
     const sach = await Sach.findById(req.params.id);
+
     if (!sach) {
       return res.status(404).json({ message: "Sách not found" });
     }
@@ -136,7 +135,10 @@ exports.deleteSach = async (req, res) => {
     // Remove image from cloud storage
     await cloudinary.uploader.destroy(sach.cloudinary_id);
 
-    await sach.remove();
+    await Sach.findByIdAndDelete(req.params.id);
+
+    // console.log(sach.cloudinary_id);
+
     res.json({ message: "Sách deleted successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });

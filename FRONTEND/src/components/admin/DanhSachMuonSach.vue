@@ -104,8 +104,9 @@ onMounted(fetchTheoDoiMuonSachList);
     <div class="flex h-screen">
         <sidebarAdmin />
         <div class="ml-[320px] h-full w-full">
-            <div class="w-full py-[25px] px-10 border-2">
-                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md">QUẢN LÝ MƯỢN TRẢ SÁCH</div>
+            <div class="w-full py-[25px] px-10 border-b-2 bg-[#a0522d] shadow-lg">
+                <div class="text-4xl font-bold  text-center text-white drop-shadow-xl"> QUẢN LÝ SÁCH MƯỢN TRẢ SÁCH
+                </div>
             </div>
 
             <!-- Table with pagination -->
@@ -113,12 +114,12 @@ onMounted(fetchTheoDoiMuonSachList);
                 <div class="bg-white mb-8 text-[12px]">
                     <table class="min-w-full bg-white">
                         <thead>
-                            <tr>
-                                <th class="py-2 px-4 border">Mã Độc Giả</th>
-                                <th class="py-2 px-4 border">Mã Sách</th>
-                                <th class="py-2 px-4 border">Ngày Mượn</th>
-                                <th class="py-2 px-4 border">Ngày Trả</th>
-                                <th class="py-2 px-4 border">Actions</th>
+                            <tr class="font-bold bg-[#a0522d] text-white">
+                                <th class="py-2 px-4">Mã Độc Giả</th>
+                                <th class="py-2 px-4">Mã Sách</th>
+                                <th class="py-2 px-4">Ngày Mượn</th>
+                                <th class="py-2 px-4">Ngày Trả</th>
+                                <th class="py-2 px-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -141,7 +142,7 @@ onMounted(fetchTheoDoiMuonSachList);
                 </div>
                 <div class="flex justify-between text-[12px]">
                     <button @click="() => router.push('/quantrivien/themthongtinmuonsach')"
-                        class="bg-[#a0522d] text-white px-5 flex justify-center items-center gap-x-2 font-bold hover:scale-110 transition-transform">
+                        class="rounded-md bg-[#a0522d] text-white px-5 flex justify-center items-center gap-x-2 font-bold hover:scale-110 transition-transform">
                         <span>
                             <i class="fa-solid fa-plus"></i>
                         </span><span> Thêm thông tin mượn sách </span>

@@ -73,7 +73,7 @@ export default {
                     console.log('Response Data:', data);
                     localStorage.setItem('chucVu', "admin");
                     // Redirect to the admin management page
-                    this.$router.push('/quantrivien/quanly');
+                    this.$router.push('/quantrivien/tongquan');
                 } else {
                     const errorData = await response.json();
                     alert(`Đăng nhập thất bại: ${errorData.message}`);

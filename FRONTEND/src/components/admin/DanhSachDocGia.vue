@@ -103,22 +103,22 @@ onMounted(fetchDocGiaList);
     <div class="flex h-screen">
         <sidebarAdmin />
         <div class="ml-[320px] h-full w-full "> <!--?-->
-            <div class="w-full py-[25px] px-10 border-2">
-                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md">QUẢN LÝ ĐỌC GIẢ
+            <div class="w-full py-[25px] px-10 border-b-2 bg-[#a0522d] shadow-lg">
+                <div class="text-4xl font-bold  text-center text-white drop-shadow-xl"> QUẢN LÝ ĐỌC GIẢ
                 </div>
             </div>
             <div class="bg-white text-[12px] w-full max-h-screen p-6">
                 <table class="min-w-full bg-white mb-8">
                     <thead>
-                        <tr>
-                            <th class="py-2 px-4 border">Mã Độc Giả</th>
-                            <th class="py-2 px-4 border">Họ Lót</th>
-                            <th class="py-2 px-4 border">Tên</th>
-                            <th class="py-2 px-4 border">Ngày Sinh</th>
-                            <th class="py-2 px-4 border">Phái</th>
-                            <th class="py-2 px-4 border">Địa Chỉ</th>
-                            <th class="py-2 px-4 border">Điện Thoại</th>
-                            <th class="py-2 px-4 border">Actions</th>
+                        <tr class="font-bold bg-[#a0522d] text-white">
+                            <th class="py-2 px-4">Mã Độc Giả</th>
+                            <th class="py-2 px-4">Họ Lót</th>
+                            <th class="py-2 px-4">Tên</th>
+                            <th class="py-2 px-4">Ngày Sinh</th>
+                            <th class="py-2 px-4">Phái</th>
+                            <th class="py-2 px-4">Địa Chỉ</th>
+                            <th class="py-2 px-4">Điện Thoại</th>
+                            <th class="py-2 px-4">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -141,7 +141,7 @@ onMounted(fetchDocGiaList);
                 </table>
                 <div class="flex justify-between text-[12px]">
                     <button @click="() => router.push('/quantrivien/themdocgia')"
-                        class="bg-[#a0522d] text-white px-5 flex justify-center items-center gap-x-2 font-bold hover:scale-110 transition-transform">
+                        class="rounded-md bg-[#a0522d] text-white px-5 flex justify-center items-center gap-x-2 font-bold hover:scale-110 transition-transform">
                         <span>
                             <i class="fa-solid fa-plus"></i>
                         </span><span> Thêm độc giả </span>

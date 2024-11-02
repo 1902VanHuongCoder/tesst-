@@ -26,9 +26,9 @@ import NhanVienDangNhap from "@/components/auth/NhanVienDangNhap.vue";
 
 const routes = [
   {
-    path: "/",
-    name: "Home_Page",
-    component: Home_Page,
+    path: "",
+    name: "Trang đăng nhập quản trị viên",
+    component: QuanTriVienDangNhap,
   },
   {
     path: "/details",

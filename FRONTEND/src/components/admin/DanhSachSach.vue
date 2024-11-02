@@ -107,13 +107,10 @@ const updateSach = async () => {
 };
 
 const deleteSach = async (maSach) => {
+    alert(maSach);
     try {
         await fetch(`http://localhost:3000/api/sach/${maSach}`, {
             method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
         });
         sachList.value = sachList.value.filter(sach => sach._id !== maSach);
     } catch (error) {
@@ -129,8 +126,8 @@ onMounted(fetchSachList);
 
         <sidebarAdmin />
         <div class="ml-[320px] h-full w-full"> <!--?-->
-            <div class="w-full py-[25px] px-10 border-2">
-                <div class="text-4xl font-bold text-[#a0522d] text-center drop-shadow-md">QUẢN LÝ SÁCH THƯ VIỆN
+            <div class="w-full py-[25px] px-10 border-b-2 bg-[#a0522d] shadow-lg">
+                <div class="text-4xl font-bold  text-center text-white drop-shadow-xl"> QUẢN LÝ SÁCH CỦA THƯ VIỆN
                 </div>
             </div>
 
@@ -139,17 +136,17 @@ onMounted(fetchSachList);
                 <div class="bg-white mb-8 text-[12px]">
                     <table class="min-w-full bg-white">
                         <thead>
-                            <tr>
-                                <th class="py-2 px-4 border-[1px]">Mã Sách</th>
-                                <th class="py-2 px-4 border-[1px]">Tên Sách</th>
-                                <th class="py-2 px-4 border-[1px]">Đơn Giá</th>
-                                <th class="py-2 px-4 border-[1px]">Số Quyển</th>
-                                <th class="py-2 px-4 border-[1px]">Năm Xuất Bản</th>
-                                <th class="py-2 px-4 border-[1px]">Mã NXB</th>
-                                <th class="py-2 px-4 border-[1px]">Nguồn Gốc</th>
-                                <th class="py-2 px-4 border-[1px]">Thể Loại</th>
-                                <th class="py-2 px-4 border-[1px]">Hình Ảnh</th>
-                                <th class="py-2 px-4 border-[1px]">Actions</th>
+                            <tr class="font-bold bg-[#a0522d] text-white">
+                                <th class="py-2 px-4">Mã Sách</th>
+                                <th class="py-2 px-4">Tên Sách</th>
+                                <th class="py-2 px-4">Đơn Giá</th>
+                                <th class="py-2 px-4">Số Quyển</th>
+                                <th class="py-2 px-4">Năm Xuất Bản</th>
+                                <th class="py-2 px-4">Mã NXB</th>
+                                <th class="py-2 px-4">Nguồn Gốc</th>
+                                <th class="py-2 px-4">Thể Loại</th>
+                                <th class="py-2 px-4">Hình Ảnh</th>
+                                <th class="py-2 px-4">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -178,7 +175,7 @@ onMounted(fetchSachList);
                 </div>
                 <div class="flex justify-between text-[12px]">
                     <button @click="() => router.push('/quantrivien/themsach')"
-                        class="bg-[#a0522d] text-white px-5 flex justify-center items-center gap-x-2 font-bold hover:scale-110 transition-transform">
+                        class=" bg-[#a0522d] rounded-md text-white px-5 flex justify-center items-center gap-x-2 font-bold hover:scale-110 transition-transform">
                         <span>
                             <i class="fa-solid fa-plus"></i>
                         </span><span> Thêm sách </span>
