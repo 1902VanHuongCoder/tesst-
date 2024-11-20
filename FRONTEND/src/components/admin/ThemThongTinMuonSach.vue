@@ -18,7 +18,8 @@ const submitForm = async () => {
         MaDocGia: MaDocGia.value,
         MaSach: MaSach.value,
         NgayMuon: NgayMuon.value,
-        NgayTra: NgayTra.value
+        NgayTra: NgayTra.value,
+        TrangThai: true,
     };
 
     console.log('Data:', data); // In ra dữ liệu đã được gửi 

@@ -67,11 +67,12 @@ export default {
         if (response.ok) {
           const data = await response.json();
           alert('Đăng nhập thành công!');
-          // Handle successful login, e.g., store user data, redirect, etc.
+          // Store MaDocGia in local storage
+          localStorage.setItem('MaDocGia', data.MaDocGia);
+          // Redirect to home page or another page
           this.$router.push('/');
         } else {
           const errorData = await response.json();
-          console.log("Dang nhap that bai roi!!!");
           alert(`Đăng nhập thất bại: ${errorData.message}`);
         }
       } catch (error) {

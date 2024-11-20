@@ -27,6 +27,8 @@ router.post('/', upload.single('HinhAnh'), sachController.createSach);
 // Các route khác
 router.get('/', sachController.getSach);
 
+router.get('/:maSach', sachController.getSachByMaSach); // New route to get book by MaSach
+
 router.put('/:id', upload.single('HinhAnh'), sachController.updateSach);
 
 router.delete('/:id', sachController.deleteSach);

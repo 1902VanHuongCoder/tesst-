@@ -36,11 +36,8 @@ exports.login = async (req, res) => {
     }
 
     // Kiểm tra mật khẩu
-    console.log("Plain Password:", MatKhau);
-    console.log("Hashed Password:", admin.MatKhau);
-
     const isMatch = await bcrypt.compare(MatKhau, admin.MatKhau);
-    console.log("Password Match:", isMatch);
+   
     if (!isMatch) {
       return res.status(400).json({ message: "Mật khẩu sai quài dị chời!" });
     }

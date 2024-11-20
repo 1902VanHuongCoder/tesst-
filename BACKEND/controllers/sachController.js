@@ -58,6 +58,22 @@ exports.deleteImage = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+// Method to get a book by MaSach
+exports.getSachByMaSach = async (req, res) => {
+  console.log("Get book by MaSach");
+  try {
+    const maSach = req.params.maSach;
+
+    const sach = await Sach.findOne({ MaSach: maSach });
+    
+    if (!sach) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+    res.json(sach);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching book data", error });
+  }
+};
 
 exports.updateSach = async (req, res) => {
   const {

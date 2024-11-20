@@ -1,9 +1,8 @@
 <template>
-  <footer class="w-full">
+  <footer class="w-full absolute bottom-0 left-0">
     <div class="w-full bg-[#A0522D] p-4">
       <div
-        class="flex justify-center flex-col text-white lg:py-4 lg:px-10 lg:flex-row font-semibold md:justify-between items-center"
-      >
+        class="flex justify-center flex-col text-white lg:py-4 lg:px-10 lg:flex-row font-semibold md:justify-between items-center">
         <div class="flex flex-col md:flex-row md:text-sm">
           <p class="mr-5 lg:text-xl">
             © 2024 Paul To, Inc. All rights reserved.
@@ -23,5 +22,4 @@
 <script>
 </script>
 
-<style>
-</style>
+<style></style>

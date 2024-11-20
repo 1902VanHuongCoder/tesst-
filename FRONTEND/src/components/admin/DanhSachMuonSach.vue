@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const theoDoiMuonSachList = ref([]);
+const pendingBorrowList = ref([]);
 const selectedTheoDoiMuonSach = ref(null);
 const showModal = ref(false);
 
@@ -13,13 +14,13 @@ const currentPage = ref(1);
 const recordsPerPage = 10;
 
 const totalPages = computed(() => {
-    return Math.ceil(theoDoiMuonSachList.value.length / recordsPerPage);
+    return Math.ceil(theoDoiMuonSachList.value.filter(tdms => tdms.TrangThai).length / recordsPerPage);
 });
 
 const paginatedTheoDoiMuonSachList = computed(() => {
     const start = (currentPage.value - 1) * recordsPerPage;
     const end = start + recordsPerPage;
-    return theoDoiMuonSachList.value.slice(start, end);
+    return theoDoiMuonSachList.value.filter(tdms => tdms.TrangThai).slice(start, end);
 });
 
 const goToPage = (page) => {
@@ -49,7 +50,9 @@ const fetchTheoDoiMuonSachList = async () => {
                 'Accept': 'application/json',
             },
         });
-        theoDoiMuonSachList.value = await response.json();
+        const data = await response.json();
+        theoDoiMuonSachList.value = data;
+        pendingBorrowList.value = data.filter(tdms => !tdms.TrangThai);
     } catch (error) {
         console.error('Error fetching theo dõi mượn sách list:', error);
     }
@@ -92,8 +95,30 @@ const deleteTheoDoiMuonSach = async (id) => {
             },
         });
         theoDoiMuonSachList.value = theoDoiMuonSachList.value.filter(tdms => tdms._id !== id);
+        pendingBorrowList.value = pendingBorrowList.value.filter(tdms => tdms._id !== id);
     } catch (error) {
         console.error('Error deleting theo dõi mượn sách:', error);
+    }
+};
+
+const approveBorrow = async (id) => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/theodoimuonsach/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ TrangThai: true }),
+        });
+        const updatedTheoDoiMuonSach = await response.json();
+        const index = theoDoiMuonSachList.value.findIndex(tdms => tdms._id === updatedTheoDoiMuonSach._id);
+        if (index !== -1) {
+            theoDoiMuonSachList.value[index] = updatedTheoDoiMuonSach;
+        }
+        pendingBorrowList.value = pendingBorrowList.value.filter(tdms => tdms._id !== id);
+    } catch (error) {
+        console.error('Error approving borrow:', error);
     }
 };
 
@@ -126,10 +151,8 @@ onMounted(fetchTheoDoiMuonSachList);
                             <tr v-for="theoDoiMuonSach in paginatedTheoDoiMuonSachList" :key="theoDoiMuonSach._id">
                                 <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaDocGia }}</td>
                                 <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaSach }}</td>
-                                <td class="py-2 px-4 border">{{ new Date(theoDoiMuonSach.NgayMuon).toLocaleDateString()
-                                    }}</td>
-                                <td class="py-2 px-4 border">{{ theoDoiMuonSach.NgayTra ? new
-                                    Date(theoDoiMuonSach.NgayTra).toLocaleDateString() : 'Chưa trả' }}</td>
+                                <td class="py-2 px-4 border">{{ new Date(theoDoiMuonSach.NgayMuon).toLocaleDateString() }}</td>
+                                <td class="py-2 px-4 border">{{ theoDoiMuonSach.NgayTra ? new Date(theoDoiMuonSach.NgayTra).toLocaleDateString() : 'Chưa trả' }}</td>
                                 <td class="py-2 px-4 border text-center">
                                     <button @click="openUpdateModal(theoDoiMuonSach)"
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
@@ -157,6 +180,34 @@ onMounted(fetchTheoDoiMuonSachList);
                         <button @click="nextPage" :disabled="currentPage === totalPages"
                             class="px-4 py-2 bg-gray-300 rounded">Sau</button>
                     </div>
+                </div>
+            </div>
+
+            <!-- Pending Borrow List -->
+            <div class="w-full max-h-screen p-6">
+                <div class="bg-white mb-8 text-[12px]">
+                    <h2 class="text-2xl font-bold mb-4 text-center text-[#a0522d]">Danh sách đơn mượn chưa phê duyệt</h2>
+                    <table class="min-w-full bg-white">
+                        <thead>
+                            <tr class="font-bold bg-[#a0522d] text-white">
+                                <th class="py-2 px-4">Mã Độc Giả</th>
+                                <th class="py-2 px-4">Mã Sách</th>
+                                <th class="py-2 px-4">Ngày Mượn</th>
+                                <th class="py-2 px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="theoDoiMuonSach in pendingBorrowList" :key="theoDoiMuonSach._id">
+                                <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaDocGia }}</td>
+                                <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaSach }}</td>
+                                <td class="py-2 px-4 border">{{ new Date(theoDoiMuonSach.NgayMuon).toLocaleDateString() }}</td>
+                                <td class="py-2 px-4 border text-center">
+                                    <button @click="approveBorrow(theoDoiMuonSach._id)"
+                                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Phê duyệt</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -198,10 +249,6 @@ onMounted(fetchTheoDoiMuonSachList);
         </div>
     </div>
 </template>
-
-<style scoped>
-/* Add your styles here */
-</style>
 
 <style scoped>
 /* Add your styles here */

@@ -17,4 +17,7 @@ router.delete("/:id", docgiaController.deleteDocgia);
 // Login a Docgia
 router.post("/login", docgiaController.loginDocgia);
 
+// Get a Docgia by MaDocGia
+router.get("/:maDocGia", docgiaController.getDocgiaByMaDocGia);
+
 module.exports = router;

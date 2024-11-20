@@ -26,7 +26,7 @@ import NhanVienDangNhap from "@/components/auth/NhanVienDangNhap.vue";
 
 const routes = [
   {
-    path: "",
+    path: "/admin/login",
     name: "Trang đăng nhập quản trị viên",
     component: QuanTriVienDangNhap,
   },
@@ -165,6 +165,18 @@ const routes = [
     path: "/quantrivien/themthongtinmuonsach",
     name: "Thêm thông tin mượn sách",
     component: ThemThongTinMuonSach,
+  },
+
+  {
+    path: "/",
+    name: "Home_Page",
+    component: Home_Page,
+  },
+
+  {
+    path: "/details",
+    name: "Details_Product",
+    component: Details_Product,
   },
 ];
 

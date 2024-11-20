@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import Footer from "../../layouts/client/Footer.vue";
 import Header from "../../layouts/client/Header.vue";
 
@@ -9,16 +10,20 @@ const toggleOpen = () => {
 };
 
 const displayedBooks = ref([]);
+const router = useRouter();
 
 const fetchBookData = async () => {
     try {
         const response = await fetch('http://localhost:3000/api/sach');
         const data = await response.json();
-        // console.log(data.displayedBooks);
         displayedBooks.value = data;
     } catch (error) {
         console.error('Error fetching book data:', error);
     }
+};
+
+const goToDetails = (maSach) => {
+    router.push({ path: '/details', query: { MaSach: maSach } });
 };
 
 onMounted(() => {
@@ -79,13 +84,16 @@ onMounted(() => {
                             <h3 class="w-60 whitespace-nowrap text-ellipsis overflow-hidden text-center">
                                 <a href=""
                                     class="text-lg font-semibold text-[#A0522D] hover:text-[#8B4513] transition-all duration-300">{{
-                                    item.TenSach }}</a>
+                                        item.TenSach }}</a>
                             </h3>
                             <p class="text-md text-gray-700 mb-2">{{ item.NhaXuatBan }}</p>
+                            <p class="text-md text-gray-700 mb-2">Năm xuất bản: {{ item.NamXuatBan }}</p>
+                            <p class="text-md text-gray-700 mb-2">Nguồn gốc: {{ item.NguonGoc }}</p>
+                            <p class="text-md text-gray-700 mb-2">Thể loại: {{ item.TheLoai }}</p>
                         </div>
-                        <button
+                        <button @click="goToDetails(item.MaSach)"
                             class="flex items-center justify-center bg-gradient-to-r from-[#A0522D] to-[#8B4513] text-white text-lg font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105">
-                            <i class="fa-solid fa-plus-circle mr-2"></i> Thêm Giỏ Hàng
+                            Xem chi tiết
                         </button>
                     </div>
                 </div>
