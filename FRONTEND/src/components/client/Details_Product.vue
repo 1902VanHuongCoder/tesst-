@@ -2,11 +2,13 @@
 import Footer from "../../layouts/client/Footer.vue";
 import Header from "../../layouts/client/Header.vue";
 import { useRoute, useRouter } from 'vue-router';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 
 const route = useRoute();
 const router = useRouter();
 const bookDetails = ref({});
+const quantity = ref(1);
+const receivingMethod = ref('Tại thư viện'); // Default receiving method
 
 const fetchBookDetails = async (maSach) => {
     try {
@@ -21,15 +23,23 @@ const fetchBookDetails = async (maSach) => {
 
 const borrowBook = async () => {
     const maDocGia = localStorage.getItem('MaDocGia');
+    if (!maDocGia) {
+        alert("Vui lòng đăng nhập để mượn sách.");
+        router.push('/login');
+        return;
+    }
+
     const maSach = bookDetails.value.MaSach;
     const ngayMuon = new Date().toISOString().split('T')[0]; // Get current date in YYYY-MM-DD format
 
     const borrowData = {
         MaDocGia: maDocGia,
         MaSach: maSach,
+        SoLuong: quantity.value,
         NgayMuon: ngayMuon,
         NgayTra: null,
         TrangThai: false,
+        HinhThucNhanSach: receivingMethod.value, // Add receiving method
     };
 
     try {
@@ -54,6 +64,14 @@ const borrowBook = async () => {
     }
 };
 
+const formatPrice = (price) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
+};
+
+const totalPrice = computed(() => {
+    return formatPrice(bookDetails.value.DonGia * quantity.value * 1000);
+});
+
 onMounted(() => {
     const maSach = route.query.MaSach;
     if (maSach) {
@@ -74,40 +92,57 @@ onMounted(() => {
                 </div>
                 <div class="w-full lg:w-[60%] flex flex-col gap-3">
                     <div class="flex flex-col gap-3 p-8">
-                        <h1 class="text-[24px] lg:text-[40px] font-semibold">
+                        <h1 class="text-[24px] lg:text-[40px] font-bold uppercase">
                             {{ bookDetails.TenSach }}
                         </h1>
-                        <p class="text-[18px] lg:text-[20px] font-semibold">Mã sách: <span
+                        <p class="text-[18px] lg:text-[20px] font-normal">Mã sách: <span
                                 class="text-[#A0522D] font-medium">{{ bookDetails.MaSach }}</span></p>
-                        <p class="text-[18px] font-semibold lg:text-[20px]">
+                        <p class="text-[18px] font-normal lg:text-[20px]">
                             Loại sách:
                             <span class="text-[#A0522D] font-medium">{{ bookDetails.TheLoai }}</span>
                         </p>
-                        <p class="text-[18px] font-semibold lg:text-[20px]">
+                        <p class="text-[18px] font-normal lg:text-[20px]">
                             Tình trạng:
                             <span class="text-[#A0522D] font-medium">vẫn còn {{ bookDetails.SoQuyen }} quyển trong thư
                                 viện</span>
                         </p>
-                        <p class="text-[18px] font-semibold lg:text-[20px]">
+                        <p class="text-[18px] font-normal lg:text-[20px]">
                             Giá mượn:
-                            <span class="text-[#A0522D] font-medium">{{ bookDetails.DonGia * 10000 }}</span>
+                            <span class="text-[#A0522D] font-medium">{{ formatPrice(bookDetails.DonGia * 1000) }}</span>
+                        </p>
+                        <p class="text-[18px] font-normal lg:text-[20px]">
+                            Tổng tiền:
+                            <span class="text-[#A0522D] font-medium">{{ totalPrice }}</span>
                         </p>
                         <hr />
-                        <h2 class="text-[20px] lg:text-[26px] font-semibold">
+                        <h2 class="text-[20px] lg:text-[26px] font-normal">
                             Thông tin chi tiết
                         </h2>
                         <p class="text-[18px] lg:text-[20px]">
                             Năm xuất bản: <span>{{ bookDetails.NamXuatBan }}</span>
                         </p>
                         <p class="text-[18px] lg:text-[20px]">
-                            Lưu ý: <span class="text-[#A0522D] font-semibold">Chính sách khuyến mãi trên PaulTo.com sẽ
+                            Lưu ý: <span class="text-[#A0522D] font-normal">Chính sách khuyến mãi trên PaulTo.com sẽ
                                 áp dụng cho Hệ thống Nhà sách Paul To trên toàn quốc.</span>
                         </p>
+                        <div class="flex items-center gap-4">
+                            <label for="quantity" class="text-[18px] lg:text-[20px] font-normal">Số lượng:</label>
+                            <input type="number" id="quantity" v-model="quantity" min="1" :max="bookDetails.SoQuyen"
+                                class="w-20 p-2 border rounded" />
+                        </div>
+                        <div class="flex items-center gap-4 mt-4">
+                            <label for="receivingMethod" class="text-[18px] lg:text-[20px] font-normal">Hình thức nhận
+                                sách:</label>
+                            <select id="receivingMethod" v-model="receivingMethod" class="p-2 border rounded">
+                                <option value="Tại thư viện">Tại thư viện</option>
+                                <option value="Qua bưu điện">Qua bưu điện</option>
+                            </select>
+                        </div>
                         <button @click="borrowBook"
-                            class="w-full bg-[#e3895f] flex flex-col gap-2 justify-center items-center p-4 text-[14px] lg:text-[20px] font-semibold text-white hover:bg-[#A0522D] transition-all duration-200">MƯỢN
+                            class="w-full bg-[#e3895f] flex flex-col gap-2 justify-center items-center p-4 text-[14px] lg:text-[20px] font-normal text-white hover:bg-[#A0522D] transition-all duration-200">MƯỢN
                             SÁCH NGAY</button>
                         <hr>
-                        <p class="text-center text-[18px] mt-4 font-semibold">Hotline hỗ trợ : <span
+                        <p class="text-center text-[18px] mt-4 font-normal">Hotline hỗ trợ : <span
                                 class="text-[#A0522D]"><i class="fa-solid fa-square-phone-flip"></i> 072-456-7893</span>
                             (7:30-22:00)</p>
                     </div>

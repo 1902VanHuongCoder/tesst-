@@ -26,6 +26,10 @@ const goToDetails = (maSach) => {
     router.push({ path: '/details', query: { MaSach: maSach } });
 };
 
+const formatPrice = (price) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price * 1000);
+};
+
 onMounted(() => {
     fetchBookData();
 });
@@ -79,22 +83,32 @@ onMounted(() => {
                     class="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-center gap-4 text-[#333f48] cursor-pointer">
                     <div v-for="(item, index) in displayedBooks" :key="index"
                         class="flex flex-col items-center border-2 rounded-lg shadow-lg p-4 bg-white transition-transform duration-300 hover:shadow-2xl">
-                        <img :src="item.HinhAnh" alt="" class="w-[200px] h-[200px] object-cover rounded-lg" />
-                        <div class="text-center">
-                            <h3 class="w-60 whitespace-nowrap text-ellipsis overflow-hidden text-center">
+                        <div class="w-full h-[300px]">
+                            <img :src="item.HinhAnh" alt="" class="w-full h-full object-cover rounded-lg" />
+                        </div>
+                        <div class="w-full">
+                            <h3
+                                class="w-full whitespace-nowrap text-ellipsis text-xl overflow-hidden text-left pt-5 pb-3">
                                 <a href=""
-                                    class="text-lg font-semibold text-[#A0522D] hover:text-[#8B4513] transition-all duration-300">{{
+                                    class="font-semibold text-[#A0522D] hover:text-[#8B4513] transition-all duration-300 uppercase">{{
                                         item.TenSach }}</a>
                             </h3>
-                            <p class="text-md text-gray-700 mb-2">{{ item.NhaXuatBan }}</p>
-                            <p class="text-md text-gray-700 mb-2">Năm xuất bản: {{ item.NamXuatBan }}</p>
-                            <p class="text-md text-gray-700 mb-2">Nguồn gốc: {{ item.NguonGoc }}</p>
-                            <p class="text-md text-gray-700 mb-2">Thể loại: {{ item.TheLoai }}</p>
+                            <p class="text-md text-gray-700 mb-2">Năm xuất bản: <span class="font-bold">{{
+                                item.NamXuatBan }}</span></p>
+                            <p class="text-md text-gray-700 mb-2">Nguồn gốc: <span class="font-bold">{{ item.NguonGoc
+                                    }}</span></p>
+                            <p class="text-md text-gray-700 mb-2">Thể loại: <span class="font-bold">{{ item.TheLoai
+                                    }}</span></p>
+                            <p class="text-md text-gray-700 mb-2">Đơn giá: <span class="font-bold">{{
+                                formatPrice(item.DonGia) }}</span></p>
                         </div>
-                        <button @click="goToDetails(item.MaSach)"
-                            class="flex items-center justify-center bg-gradient-to-r from-[#A0522D] to-[#8B4513] text-white text-lg font-semibold py-2 px-6 rounded-full shadow-md transition-all duration-300 hover:scale-105">
-                            Xem chi tiết
-                        </button>
+                        <div class="mt-5 text-left w-full">
+                            <button @click="goToDetails(item.MaSach)"
+                                class="text-left flex  bg-gradient-to-r from-[#A0522D] to-[#8B4513] text-white text-lg font-semibold py-2 px-6 rounded-md shadow-md transition-all duration-300 hover:scale-105">
+                                Xem chi tiết
+                            </button>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -14,15 +14,17 @@
                 <input type="tel" id="DienThoai" v-model="form.DienThoai" autocomplete="tel"
                   class="w-full px-4 py-3 rounded-lg outline-none border-2 border-gray-300 focus:border-[#A0522D] focus:ring-[#A0522D] transition duration-150 ease-in-out"
                   placeholder="Số điện thoại ..." required>
+                <p v-if="form.DienThoai && form.DienThoai.length < 10" class="text-red-500 text-sm mt-1">Số điện thoại phải có ít nhất 10 số.</p>
               </div>
               <div>
                 <label for="password" class="text-sm font-medium text-gray-800 block mb-2">Mật Khẩu</label>
                 <input type="password" id="password" v-model="form.MatKhau" autocomplete="current-password"
                   class="w-full px-4 py-3 outline-none rounded-lg border-2 border-gray-300 focus:border-[#A0522D] focus:ring-[#A0522D] transition duration-150 ease-in-out"
                   placeholder="••••••••" required>
+                <p v-if="!form.MatKhau" class="text-red-500 text-sm mt-1">Mật khẩu không được để trống.</p>
               </div>
-              <button type="submit"
-                class="w-full bg-[#A0522D] text-white rounded-lg py-3 px-4 font-semibold hover:bg-[#8B4513] transition duration-300 ease-in-out transform hover:scale-105">
+              <button type="submit" :disabled="!isFormValid"
+                class="w-full bg-[#A0522D] text-white rounded-lg py-3 px-4 font-semibold hover:bg-[#8B4513] transition duration-300 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed">
                 Đăng Nhập
               </button>
             </form>
@@ -53,8 +55,18 @@ export default {
       }
     };
   },
+  computed: {
+    isFormValid() {
+      return this.form.DienThoai.length >= 10 && this.form.MatKhau;
+    }
+  },
   methods: {
     async handleLogin() {
+      if (!this.isFormValid) {
+        alert('Vui lòng nhập đầy đủ thông tin hợp lệ.');
+        return;
+      }
+
       try {
         const response = await fetch('http://localhost:3000/api/docgia/login', {
           method: 'POST',

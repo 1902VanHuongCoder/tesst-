@@ -71,7 +71,10 @@ const updateTheoDoiMuonSach = async () => {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
-            body: JSON.stringify({ NgayTra: selectedTheoDoiMuonSach.value.NgayTra }),
+            body: JSON.stringify({ 
+                NgayTra: selectedTheoDoiMuonSach.value.NgayTra,
+                HinhThucNhanSach: selectedTheoDoiMuonSach.value.HinhThucNhanSach
+            }),
         });
         const updatedTheoDoiMuonSach = await response.json();
         const index = theoDoiMuonSachList.value.findIndex(tdms => tdms._id === updatedTheoDoiMuonSach._id);
@@ -144,6 +147,7 @@ onMounted(fetchTheoDoiMuonSachList);
                                 <th class="py-2 px-4">Mã Sách</th>
                                 <th class="py-2 px-4">Ngày Mượn</th>
                                 <th class="py-2 px-4">Ngày Trả</th>
+                                <th class="py-2 px-4">Hình thức nhận sách</th>
                                 <th class="py-2 px-4">Actions</th>
                             </tr>
                         </thead>
@@ -152,7 +156,12 @@ onMounted(fetchTheoDoiMuonSachList);
                                 <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaDocGia }}</td>
                                 <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaSach }}</td>
                                 <td class="py-2 px-4 border">{{ new Date(theoDoiMuonSach.NgayMuon).toLocaleDateString() }}</td>
-                                <td class="py-2 px-4 border">{{ theoDoiMuonSach.NgayTra ? new Date(theoDoiMuonSach.NgayTra).toLocaleDateString() : 'Chưa trả' }}</td>
+                                <td class="py-2 px-4 border">
+                                    <span :class="{'text-red-500': !theoDoiMuonSach.NgayTra}">
+                                        {{ theoDoiMuonSach.NgayTra ? new Date(theoDoiMuonSach.NgayTra).toLocaleDateString() : 'Chưa trả' }}
+                                    </span>
+                                </td>
+                                <td class="py-2 px-4 border">{{ theoDoiMuonSach.HinhThucNhanSach }}</td>
                                 <td class="py-2 px-4 border text-center">
                                     <button @click="openUpdateModal(theoDoiMuonSach)"
                                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">Update</button>
@@ -193,6 +202,7 @@ onMounted(fetchTheoDoiMuonSachList);
                                 <th class="py-2 px-4">Mã Độc Giả</th>
                                 <th class="py-2 px-4">Mã Sách</th>
                                 <th class="py-2 px-4">Ngày Mượn</th>
+                                <th class="py-2 px-4">Hình thức nhận sách</th>
                                 <th class="py-2 px-4">Actions</th>
                             </tr>
                         </thead>
@@ -201,6 +211,7 @@ onMounted(fetchTheoDoiMuonSachList);
                                 <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaDocGia }}</td>
                                 <td class="py-2 px-4 border">{{ theoDoiMuonSach.MaSach }}</td>
                                 <td class="py-2 px-4 border">{{ new Date(theoDoiMuonSach.NgayMuon).toLocaleDateString() }}</td>
+                                <td class="py-2 px-4 border">{{ theoDoiMuonSach.HinhThucNhanSach }}</td>
                                 <td class="py-2 px-4 border text-center">
                                     <button @click="approveBorrow(theoDoiMuonSach._id)"
                                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">Phê duyệt</button>
@@ -220,13 +231,13 @@ onMounted(fetchTheoDoiMuonSachList);
             <form @submit.prevent="updateTheoDoiMuonSach">
                 <div class="mb-4">
                     <label for="MaDocGia" class="block text-sm font-medium text-gray-700">Mã Độc Giả</label>
-                    <input v-model="selectedTheoDoiMuonSach.MaDocGia" type="text" id="MaDocGia"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                    <input v-model="selectedTheoDoiMuonSach.MaDocGia" type="text" id="MaDocGia" readonly
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100" />
                 </div>
                 <div class="mb-4">
                     <label for="MaSach" class="block text-sm font-medium text-gray-700">Mã Sách</label>
-                    <input v-model="selectedTheoDoiMuonSach.MaSach" type="text" id="MaSach"
-                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                    <input v-model="selectedTheoDoiMuonSach.MaSach" type="text" id="MaSach" readonly
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm bg-gray-100" />
                 </div>
                 <div class="mb-4">
                     <label for="NgayMuon" class="block text-sm font-medium text-gray-700">Ngày Mượn</label>
@@ -238,6 +249,14 @@ onMounted(fetchTheoDoiMuonSachList);
                     <label for="NgayTra" class="block text-sm font-medium text-gray-700">Ngày Trả</label>
                     <input v-model="selectedTheoDoiMuonSach.NgayTra" type="date" id="NgayTra"
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+                </div>
+                <div class="mb-4">
+                    <label for="HinhThucNhanSach" class="block text-sm font-medium text-gray-700">Hình thức nhận sách</label>
+                    <select v-model="selectedTheoDoiMuonSach.HinhThucNhanSach" id="HinhThucNhanSach"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                        <option value="Tại thư viện">Tại thư viện</option>
+                        <option value="Qua bưu điện">Qua bưu điện</option>
+                    </select>
                 </div>
                 <div class="flex justify-end">
                     <button type="button" @click="showModal = false"
