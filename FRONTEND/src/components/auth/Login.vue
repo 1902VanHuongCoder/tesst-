@@ -28,7 +28,7 @@
             </form>
             <p class="mt-8 text-center text-sm text-gray-700">
               Nếu bạn chưa có tài khoản?
-              <a href="#"
+              <a href="#" v-on:click="$router.push('/register')"
                 class="font-medium text-[#A0522D] hover:text-[#8B4513] transition duration-150 ease-in-out">Đăng Ký</a>
             </p>
           </div>

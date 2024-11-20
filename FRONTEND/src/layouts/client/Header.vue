@@ -38,37 +38,44 @@ onMounted(() => {
 <template>
     <header>
         <div class="relative flex items-center justify-between lg:py-4 lg:px-10 p-4">
-            <div class="px-4">
+            <div class="px-4 cursor-pointer" v-on:click="$router.push('/')">
                 <h1 class="font-bold lg:text-2xl text-[14px] uppercase text-[#A0522D]">
                     Paul-To-Book
                 </h1>
             </div>
-            <ul>
-                <li>
-                    <a v-if="isLoggedIn" @click.prevent="handleLogout"
-                        class="font-bold group-hover:text-[#A0522D] transition-all duration-300 cursor-pointer">
-                        Đăng xuất
-                    </a>
-                    <router-link v-else to="/login"
-                        class="font-bold group-hover:text-[#A0522D] transition-all duration-300">
-                        Đăng nhập
-                    </router-link>
-                </li>
-            </ul>
+            <div class="flex items-center">
+                <ul class="flex uppercase gap-x-4 text-[#A0522D] mr-10">
+                    <li>
+                        <router-link to="/" class="font-bold group-hover:text-[#A0522D] transition-all duration-300">
+                            Trang chủ
+                        </router-link>
+                    </li>
+                    <li>
+                        <a v-if="isLoggedIn" @click.prevent="handleLogout"
+                            class="font-bold group-hover:text-[#A0522D] transition-all duration-300 cursor-pointer">
+                            ĐĂNG XUẤT
+                        </a>
+                        <router-link v-else to="/login"
+                            class="font-bold group-hover:text-[#A0522D] transition-all duration-300">
+                            Đăng nhập
+                        </router-link>
+                    </li>
+                </ul>
 
-            <div class="flex items-center lg:space-x-8 space-x-5 px-4">
-                <div v-if="userData" class="user flex space-x-4 items-center justify-center cursor-pointer">
-                    <span>{{ userData.Ten }}</span>
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnSA1zygA3rubv-VK0DrVcQ02Po79kJhXo_A&s"
-                        class="lg:w-[50px] lg:h-[50px] w-[40px] h-[40px] rounded-full border-2 border-[#C0C0C0]"
-                        alt="" />
+                <div class="flex items-center lg:space-x-8 space-x-5 px-4">
+                    <div v-if="userData" class="user flex space-x-4 items-center justify-center cursor-pointer">
+                        <span class="uppercase">{{ userData.Ten }}</span>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTnSA1zygA3rubv-VK0DrVcQ02Po79kJhXo_A&s"
+                            class="lg:w-[50px] lg:h-[50px] w-[40px] h-[40px] rounded-full border-2 border-[#C0C0C0]"
+                            alt="" />
 
+                    </div>
+                    <button class="open_menu lg:hidden block">
+                        <i class="fa-solid fa-bars text-[26px] text-[#A0522D]"></i>
+                    </button>
                 </div>
-                <button class="open_menu lg:hidden block">
-                    <i class="fa-solid fa-bars text-[26px] text-[#A0522D]"></i>
-                </button>
             </div>
-            <div class="sidebar_menu fixed top-0 -right-[100%] bg-[#fff] p-4 w-full h-full z-40">
+            <!-- <div class="sidebar_menu fixed top-0 -right-[100%] bg-[#fff] p-4 w-full h-full z-40">
                 <div class="flex justify-between items-center p-2">
                     <h1 class="font-bold text-xl uppercase text-[#A0522D]">
                         Paul-To-Book
@@ -101,8 +108,8 @@ onMounted(() => {
                         </router-link>
                     </li>
                 </ul>
-            </div>
-            <div
+            </div> -->
+            <!-- <div
                 class="info absolute top-24 right-[-100%] flex flex-col gap-3 p-6 border-2 border-[#C0C0C0] rounded-2xl bg-[#fff] shadow-md z-10">
                 <div class="mb-4 flex justify-center">
                     <img src="../../assets/img/review_1.png"
@@ -136,7 +143,7 @@ onMounted(() => {
                         <span class="ml-3 text-lg font-semibold text-gray-800 group-hover:text-white">Đăng nhập</span>
                     </router-link>
                 </div>
-            </div>
+            </div> -->
         </div>
     </header>
 </template>
